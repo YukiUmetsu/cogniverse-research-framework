@@ -17,17 +17,21 @@ def main():
     parser.add_argument(
         "--type",
         required=True,
-        dest="experiment_type",
     )
 
     args = parser.parse_args()
 
     result = ExperimentGenerator().generate(
         args.experiment_id,
-        args.experiment_type,
+        args.type,
     )
 
-    print(json.dumps(result, indent=2))
+    print(
+        json.dumps(
+            result,
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

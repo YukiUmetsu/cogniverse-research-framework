@@ -1,10 +1,9 @@
 MANIFEST_TEMPLATE = """experiment_id: {experiment_id}
 name: {experiment_id}
-
 type: {experiment_type}
 
 execution:
-  mode: replay
+  mode: framework
 
 audit:
   forbid_environment_reset: true
@@ -12,7 +11,7 @@ audit:
 """
 
 
-ADAPTER_TEMPLATE = """
+ADAPTER_TEMPLATE = """from cogniverse_framework.execution.engine import ExecutionEngine
 
 
 class {class_name}:
@@ -22,15 +21,22 @@ class {class_name}:
     def run(self):
         return {{
             "experiment_id": self.experiment_id,
-            "status": "READY"
+            "result": "ok"
         }}
+
+
+if __name__ == "__main__":
+
+    result = ExecutionEngine(
+        {class_name}()
+    ).run()
+
+    print(result)
 """
 
 
 RUNNER_TEMPLATE = """#!/usr/bin/env bash
 set -euo pipefail
-
-echo "Running {experiment_id}"
 
 PYTHONPATH=../../src python adapter.py
 """

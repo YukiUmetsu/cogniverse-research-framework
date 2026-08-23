@@ -6,51 +6,49 @@ from .schemas import (
     validate_experiment_id,
     validate_type,
 )
+
 from .templates import (
     MANIFEST_TEMPLATE,
     ADAPTER_TEMPLATE,
     RUNNER_TEMPLATE,
     TEST_TEMPLATE,
 )
+
+
 class ExperimentGenerator:
 
     def __init__(self, root="experiments"):
         self.root = Path(root)
 
     def generate(self, experiment_id, experiment_type):
+
         validate_experiment_id(experiment_id)
         validate_type(experiment_type)
 
         directory = self.root / experiment_id
 
         files = {
-            "manifest.yaml":
-                MANIFEST_TEMPLATE.format(
-                    experiment_id=experiment_id,
-                    experiment_type=experiment_type,
-                ),
-
-            "adapter.py":
-                ADAPTER_TEMPLATE.format(
-                    class_name=self._class_name(experiment_id),
-                    experiment_id=experiment_id,
-                ),
-
-            "run.sh":
-                RUNNER_TEMPLATE.format(
-                    experiment_id=experiment_id,
-                ),
-
-            "tests/test_generated.py":
-                TEST_TEMPLATE,
+            "manifest.yaml": MANIFEST_TEMPLATE.format(
+                experiment_id=experiment_id,
+                experiment_type=experiment_type,
+            ),
+            "adapter.py": ADAPTER_TEMPLATE.format(
+                class_name=self._class_name(experiment_id),
+                experiment_id=experiment_id,
+            ),
+            "run.sh": RUNNER_TEMPLATE,
+            "tests/test_generated.py": TEST_TEMPLATE,
         }
 
-        for relative, content in files.items():
-            path = directory / relative
+        for name, content in files.items():
+
+            path = directory / name
+
             path.parent.mkdir(
                 parents=True,
                 exist_ok=True,
             )
+
             path.write_text(content)
 
             if path.name == "run.sh":
@@ -58,17 +56,17 @@ class ExperimentGenerator:
 
         hashes = {}
 
-        for relative in files:
-            path = directory / relative
-            hashes[relative] = hashlib.sha256(
+        for name in files:
+            path = directory / name
+            hashes[name] = hashlib.sha256(
                 path.read_bytes()
             ).hexdigest()
 
         result = {
             "experiment_id": experiment_id,
             "type": experiment_type,
-            "path": str(directory),
             "files": hashes,
+            "path": str(directory),
         }
 
         (directory / "generation.json").write_text(
@@ -79,6 +77,6 @@ class ExperimentGenerator:
 
     def _class_name(self, value):
         return "".join(
-            part.capitalize()
-            for part in value.replace("-", "_").split("_")
+            x.capitalize()
+            for x in value.replace("-", "_").split("_")
         )
