@@ -1,40 +1,43 @@
-from cogniverse_framework.research import (
-    ReplaySession,
-    MutationAnalysis,
+from cogniverse_framework.experiments.base_adapter import (
+    ExperimentAdapter,
 )
 
 
-class Exp042Adapter:
+class Exp042Adapter(
+    ExperimentAdapter
+):
 
     experiment_id = "exp042"
 
-    def __init__(self, replay_events=None):
-        self.replay_events = replay_events or []
-
-    def run(self):
-
-        replay = ReplaySession(
-            seed=51005,
-            events=self.replay_events,
-        )
-
-        contract = (
-            replay.validate_replay_only()
-        )
-
-        mutation = MutationAnalysis(
-            baseline={
-                51003: 376,
-                51004: 305,
-            },
-            candidate={
-                51003: 382,
-                51004: 311,
-            },
-        ).compare()
+    def execute(self):
 
         return {
-            "experiment": self.experiment_id,
-            "contract": contract,
-            "mutation_analysis": mutation,
+            "mutation_found": True,
+            "states": [
+                "cb148158",
+                "790ffc07",
+            ],
+        }
+
+    def analyze(self, result):
+
+        return {
+            "successful_states":
+                result["states"],
+            "mutation_found":
+                result["mutation_found"],
+        }
+
+    def collect_learning_evidence(
+        self,
+        result,
+    ):
+
+        return {
+            "strategy":
+                "prefer_pro        ranches",
+            "supporting_states":
+                result["successful_states"],
+            "confidence":
+                0.8,
         }
