@@ -38,7 +38,9 @@ if __name__ == "__main__":
 RUNNER_TEMPLATE = """#!/usr/bin/env bash
 set -euo pipefail
 
-PYTHONPATH=../../src python adapter.py
+ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
+
+PYTHONPATH="$ROOT/src" python3 adapter.py
 """
 
 

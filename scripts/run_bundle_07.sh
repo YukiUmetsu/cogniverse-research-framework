@@ -32,7 +32,7 @@ experiment = root / "exp043"
 completed = subprocess.run(
     [
         "bash",
-        str(experiment / "run.sh"),
+        "./run.sh",
     ],
     cwd=experiment,
     env={
