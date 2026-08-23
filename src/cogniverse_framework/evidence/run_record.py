@@ -15,7 +15,7 @@ class RunRecord:
         payload = {
             "experiment_id": self.experiment_id,
             "status": self.status,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(datetime.UTC).isoformat(),
         }
 
         encoded = json.dumps(
