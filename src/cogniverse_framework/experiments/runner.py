@@ -1,34 +1,25 @@
-from .execution_result import ExecutionResult
+from cogniverse_framework.contracts.audit_contract import AuditContract
 
 
 class ExperimentRunner:
 
-    def __init__(self, experiment_id, lifecycle):
-        self.experiment_id = experiment_id
+    def __init__(self, manifest, lifecycle):
+        self.manifest = manifest
         self.lifecycle = lifecycle
 
     def run(self):
-        result = ExecutionResult(
-            experiment_id=self.experiment_id,
-            status="RUNNING",
-        )
+        contract = AuditContract()
 
-        result.phase_results["preflight"] = (
-            self.lifecycle.preflight()
-        )
+        phases = {}
 
-        result.phase_results["execute"] = (
-            self.lifecycle.execute()
-        )
+        phases["preflight"] = self.lifecycle.preflight()
+        phases["execute"] = self.lifecycle.execute()
+        phases["analyze"] = self.lifecycle.analyze()
+        phases["settle"] = self.lifecycle.settle()
 
-        result.phase_results["analyze"] = (
-            self.lifecycle.analyze()
-        )
-
-        result.phase_results["settle"] = (
-            self.lifecycle.settle()
-        )
-
-        result.status = "COMPLETE"
-
-        return result
+        return {
+            "experiment_id": self.manifest.experiment_id,
+            "status": "COMPLETE",
+            "contract": contract.validate(),
+            "phases": phases,
+        }

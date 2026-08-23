@@ -1,0 +1,8 @@
+experiment_id: exp042
+name: replay-comparison
+
+mode: replay
+environment: minigrid
+
+reset_forbidden: true
+fresh_seed_forbidden: true
