@@ -1,17 +1,5 @@
-def compare_seed_matrix(baseline, candidate):
-    rows = []
+"""Compatibility shim — prefer ``replay.compare.compare_seed_matrix``."""
 
-    for seed in sorted(
-        set(baseline.keys()) | set(candidate.keys())
-    ):
-        rows.append({
-            "seed": seed,
-            "baseline": baseline.get(seed),
-            "candidate": candidate.get(seed),
-            "changed": (
-                baseline.get(seed)
-                != candidate.get(seed)
-            ),
-        })
+from .compare import compare_seed_matrix
 
-    return rows
+__all__ = ["compare_seed_matrix"]
