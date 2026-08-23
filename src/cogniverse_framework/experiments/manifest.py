@@ -3,7 +3,15 @@ from dataclasses import dataclass
 
 @dataclass
 class ExperimentManifest:
+
     experiment_id: str
-    name: str
-    mode: str
-    environment: str
+    adapter: str
+
+    def validate(self):
+
+        return {
+            "valid": bool(
+                self.experiment_id
+                and self.adapter
+            )
+        }
