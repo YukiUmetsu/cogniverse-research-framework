@@ -1,5 +1,5 @@
 from dataclasses import dataclass, asdict
-from datetime import datetime
+from datetime import datetime, timezone
 import hashlib
 import json
 
@@ -15,7 +15,7 @@ class RunRecord:
         payload = {
             "experiment_id": self.experiment_id,
             "status": self.status,
-            "timestamp": datetime.now(datetime.UTC).isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
 
         encoded = json.dumps(
