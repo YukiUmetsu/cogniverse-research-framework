@@ -1,8 +1,7 @@
-import json
 from pathlib import Path
 
 
-def write_research_report(path, result):
+def write_research_markdown(path, result):
 
     path = Path(path)
 
@@ -11,11 +10,17 @@ def write_research_report(path, result):
         exist_ok=True,
     )
 
-    path.write_text(
-        json.dumps(
-            result,
-            indent=2,
-        )
-    )
+    content = f"""# Research Report
+
+Experiment: {result.get("experiment")}
+
+Status: {result.get("status")}
+
+## Evidence
+
+{result}
+"""
+
+    path.write_text(content)
 
     return str(path)
