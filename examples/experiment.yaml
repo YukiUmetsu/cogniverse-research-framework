@@ -1,0 +1,9 @@
+experiment:
+  id: exp000
+  name: example
+  mode: replay
+  environment: minigrid
+
+validation:
+  require_clean_tree: true
+  require_no_environment_reset: true
