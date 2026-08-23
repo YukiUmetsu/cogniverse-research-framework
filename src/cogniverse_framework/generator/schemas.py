@@ -1,4 +1,5 @@
 VALID_TYPES = {
+    "replay",
     "replay-analysis",
     "audit",
     "simulation",

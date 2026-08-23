@@ -1,15 +1,17 @@
-def compare_runs(left, right):
+"""Field-level comparison of run/result mappings."""
 
-    changes = []
+from __future__ import annotations
 
-    keys = set(left) | set(right)
+from collections.abc import Mapping
+from typing import Any
 
-    for key in sorted(keys):
+from cogniverse_framework.replay.compare import compare_runs as _compare_runs
 
-        if left.get(key) != right.get(key):
-            changes.append(key)
 
-    return {
-        "changed": bool(changes),
-        "changed_fields": changes,
-    }
+def compare_runs(
+    left: Mapping[Any, Any],
+    right: Mapping[Any, Any],
+) -> dict[str, Any]:
+    """Return a dict-shaped field diff for legacy callers."""
+
+    return _compare_runs(left, right).to_dict()

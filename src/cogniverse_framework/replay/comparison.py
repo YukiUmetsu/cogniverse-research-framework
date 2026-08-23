@@ -1,6 +1,5 @@
-def compare_runs(baseline, candidate):
-    return {
-        "baseline": baseline,
-        "candidate": candidate,
-        "changed": baseline != candidate,
-    }
+"""Compatibility shim — prefer ``replay.compare.compare_runs``."""
+
+from .compare import compare_runs
+
+__all__ = ["compare_runs"]
