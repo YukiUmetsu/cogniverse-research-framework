@@ -9,7 +9,10 @@ from .schemas import (
 from .templates import (
     MANIFEST_TEMPLATE,
     ADAPTER_TEMPLATE,
-    RUNNER    RUNNER    RUNNER    RUNNER    RUNNER    RUNNER  nerator:
+    RUNNER_TEMPLATE,
+    TEST_TEMPLATE,
+)
+class ExperimentGenerator:
 
     def __init__(self, root="experiments"):
         self.root = Path(root)
