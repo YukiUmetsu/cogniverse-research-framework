@@ -20,10 +20,17 @@ Prefer the coherent API under `cogniverse_framework.replay`:
 - `compare_seed_matrix` / `compare_runs` — typed seed and run diffs
 - `audit_sequence_divergence`, `find_later`, `first_divergence` — sequence audits
 - `shared_ancestry`, `first_reach_parents`, `ancestry_path` — ancestry graphs
+- `diagnose_seed_failures` / `SeedProfile` — contrast repeatedly failing seeds
+  against a reference cohort on caller-supplied metrics and milestones
 
-Result types (`DivergenceResult`, `LaterLookup`, `SeedMatrixResult`, …) live in
-`cogniverse_framework.replay.types`. Compatibility shims remain in
+Result types (`DivergenceResult`, `LaterLookup`, `SeedMatrixResult`,
+`SeedFailureDiagnosis`, …) live in `cogniverse_framework.replay.types` and
+`replay.seed_diagnosis_types`. Compatibility shims remain in
 `replay.comparison`, `replay.seed_matrix`, and `research.MutationAnalysis`.
+
+Seed-failure diagnosis is intentionally domain-agnostic: the lab extracts
+metrics from archived evidence and may attach classifier labels; the framework
+owns the cohort contrast bookkeeping.
 
 ## EXP-042 adapter
 

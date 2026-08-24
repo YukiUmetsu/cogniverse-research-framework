@@ -99,6 +99,8 @@ flowchart TB
 
 You bring the recorded events and scores. The framework does the bookkeeping: shared prefix, first difference, later matches, and side-by-side trial tables.
 
+When some trial numbers keep failing, you can also ask: *what is different about those seeds?* Build a `SeedProfile` per seed (metrics + milestone timings from archived evidence), then call `diagnose_seed_failures` to contrast the hard cohort against successes. The framework reports which metrics cleanly separate them; the lab decides what that means scientifically.
+
 ---
 
 ## Who owns what
@@ -107,7 +109,7 @@ You bring the recorded events and scores. The framework does the bookkeeping: sh
 | --- | --- |
 | Shared run lifecycle | The research question and hypothesis |
 | Saving and hashing evidence | Specific seeds, timings, and claim wording |
-| Replay / compare helpers | Interpreting what a difference *means* scientifically |
+| Replay / compare / seed-failure diagnosis helpers | Interpreting what a difference *means* scientifically |
 | Thin adapters as plugs for experiments | Filling those plugs with real experiment data |
 
 More detail for contributors: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
@@ -116,7 +118,7 @@ More detail for contributors: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Install
 
-Current version: **0.2.0** (see `pyproject.toml`).
+Current version: **0.2.1** (see `pyproject.toml`).
 
 **On your machine, while developing against a local copy:**
 
