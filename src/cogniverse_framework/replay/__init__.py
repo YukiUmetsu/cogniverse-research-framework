@@ -14,6 +14,18 @@ from .divergence import (
     first_divergence,
     post_divergence_budget,
 )
+from .seed_diagnosis import (
+    diagnose_seed_failures,
+    label_if_metric_strictly_lower,
+    label_if_milestone_absent_on_hard,
+    profiles_from_metric_table,
+)
+from .seed_diagnosis_types import (
+    MetricContrast,
+    MilestoneContrast,
+    SeedFailureDiagnosis,
+    SeedProfile,
+)
 from .trajectory import Trajectory
 from .transition import Transition
 from .types import (
@@ -38,8 +50,16 @@ __all__ = [
     "SeedRow",
     "SeedMatrixResult",
     "RunCompareResult",
+    "SeedProfile",
+    "MetricContrast",
+    "MilestoneContrast",
+    "SeedFailureDiagnosis",
     "compare_runs",
     "compare_seed_matrix",
+    "diagnose_seed_failures",
+    "profiles_from_metric_table",
+    "label_if_metric_strictly_lower",
+    "label_if_milestone_absent_on_hard",
     "shared_ancestry",
     "first_reach_parents",
     "ancestry_path",
