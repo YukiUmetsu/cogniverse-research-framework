@@ -14,6 +14,16 @@ from .divergence import (
     first_divergence,
     post_divergence_budget,
 )
+from .seed_audit import (
+    SEED_AUDIT_CARD_SCHEMA_VERSION,
+    SeedAuditCard,
+    SeedAuditDelta,
+    SeedReferenceContrast,
+    build_seed_audit_card,
+    build_seed_audit_cards,
+    compare_seed_audits,
+    contrast_seed_to_references,
+)
 from .seed_diagnosis import (
     diagnose_seed_failures,
     label_if_metric_strictly_lower,
@@ -54,6 +64,14 @@ __all__ = [
     "MetricContrast",
     "MilestoneContrast",
     "SeedFailureDiagnosis",
+    "SEED_AUDIT_CARD_SCHEMA_VERSION",
+    "SeedAuditCard",
+    "SeedAuditDelta",
+    "SeedReferenceContrast",
+    "build_seed_audit_card",
+    "build_seed_audit_cards",
+    "compare_seed_audits",
+    "contrast_seed_to_references",
     "compare_runs",
     "compare_seed_matrix",
     "diagnose_seed_failures",
