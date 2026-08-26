@@ -7,6 +7,10 @@
     "passed": 7,
     "total": 7
   },
+  "full_framework_tests": {
+    "passed": 52,
+    "total": 52
+  },
   "independent_checks": {
     "passed": 8,
     "replays": 2,
