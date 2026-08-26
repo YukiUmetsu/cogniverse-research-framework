@@ -55,6 +55,18 @@ class PublicPerceptTests(unittest.TestCase):
         payload = self.make().to_dict()
         self.assertTrue({"text", "prompt", "reasoning", "reward", "selected_action", "belief"}.isdisjoint(payload))
 
+    def test_rejects_identifier_value_channels(self):
+        for overrides in (
+            {"percept_id": "selected action open door"},
+            {"source_system": "reward-policy"},
+            {"evidence_ids": ("prompt-content",)},
+            {"evidence_ids": ("x" * 129,)},
+            {"evidence_ids": ("event/12",)},
+        ):
+            with self.subTest(overrides=overrides):
+                with self.assertRaisesRegex(ValueError, "opaque identifier"):
+                    self.make(**overrides)
+
 
 if __name__ == "__main__":
     unittest.main()
