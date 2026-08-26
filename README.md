@@ -128,7 +128,7 @@ More detail for contributors: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Install
 
-Current version: **0.2.1** (see `pyproject.toml`).
+Current version: **0.3.0** (see `pyproject.toml`).
 
 **On your machine, while developing against a local copy:**
 
@@ -147,6 +147,40 @@ pip install "cogniverse-research-framework @ git+https://github.com/<org>/cogniv
 ```
 
 Until a tag is published for a change you need, use the editable install above, or pin the merge commit after that change lands.
+
+---
+
+## Shared cognitive-state contract
+
+The first brain-inspired framework primitive is an immutable coordination snapshot. It carries references, not full subsystem databases or English instructions:
+
+```python
+from cogniverse_framework.cognition import (
+    CognitiveReference,
+    CognitiveState,
+    ReferenceKind,
+)
+
+belief = CognitiveReference(
+    ref_id="belief-door-open",
+    kind=ReferenceKind.BELIEF,
+    source_system="perception",
+    logical_step=12,
+    confidence_ppm=750_000,
+    evidence_ids=("event-12",),
+)
+
+state = CognitiveState(
+    state_id="state-12",
+    logical_step=12,
+    beliefs=(belief,),
+    uncertainty_ppm=250_000,
+)
+
+print(state.digest())
+```
+
+The contract has no LLM dependency, selected-action authority, scalar reward, task semantics, or memory backend. See [the v1 foundation report](docs/COGNITIVE_STATE_V1.md).
 
 ---
 
