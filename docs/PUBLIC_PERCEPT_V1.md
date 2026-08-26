@@ -24,8 +24,8 @@ Validation shared with `CognitiveState` moved to one internal module, avoiding a
 
 | Metric | Result | Meaning |
 | --- | ---: | --- |
-| Focused perception tests | **6/6 PASS** | Contract, rejection, immutability, and serialization behavior |
-| Independent checks | **7/7 PASS twice** | Separate fixture reconstruction agreed |
+| Focused perception tests | **7/7 PASS** | Contract, rejection, immutability, serialization, and value-channel behavior |
+| Independent checks | **8/8 PASS twice** | Separate fixture reconstruction and negative boundary agreed |
 | Existing state digest | `32c435fe…07f7` | `CognitiveState` serialization stayed unchanged |
 | Percept digest | `6deedb68…ddcf` | Deterministic `PublicPercept` fixture identity |
 | Raw payload fields | **0** | Large observations remain subsystem-owned |
@@ -55,7 +55,7 @@ Learning Lab is unchanged until the framework PR is merged and its exact identit
 - This is an interface contract, not perception learning or object recognition.
 - The environment adapter supplies modality, confidence, evidence IDs, and the raw-content digest.
 - SHA-256 identifies bytes; it does not prove those bytes are truthful or semantically correct.
-- Identifier filtering is a narrow fail-closed boundary, not a complete information-security system.
+- Opaque identifiers are lowercase ASCII, bounded to 128 characters, and reject obvious decision-channel markers. This is still not a complete information-security system.
 - The contract does not promote a percept into a belief or accepted empirical knowledge.
 - No simulator, held-out task outcome, or GitHub Actions research simulation ran.
 
