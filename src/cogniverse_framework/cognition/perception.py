@@ -13,7 +13,11 @@ import json
 import re
 from typing import Any, ClassVar
 
-from ._validation import normalize_identifiers, validate_identifier, validate_ppm
+from ._validation import (
+    normalize_opaque_identifiers,
+    validate_opaque_identifier,
+    validate_ppm,
+)
 
 
 _SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
@@ -44,8 +48,8 @@ class PublicPercept:
     evidence_ids: tuple[str, ...] = field(default_factory=tuple)
 
     def __post_init__(self) -> None:
-        validate_identifier("percept_id", self.percept_id)
-        validate_identifier("source_system", self.source_system)
+        validate_opaque_identifier("percept_id", self.percept_id)
+        validate_opaque_identifier("source_system", self.source_system)
         if isinstance(self.logical_step, bool) or not isinstance(self.logical_step, int) or self.logical_step < 0:
             raise ValueError("logical_step must be a non-negative integer")
         if not isinstance(self.modality, PerceptModality):
@@ -53,7 +57,9 @@ class PublicPercept:
         if not isinstance(self.content_sha256, str) or not _SHA256_PATTERN.fullmatch(self.content_sha256):
             raise ValueError("content_sha256 must be a lowercase SHA-256 hex digest")
         validate_ppm("confidence_ppm", self.confidence_ppm)
-        evidence_ids = normalize_identifiers("evidence_ids", tuple(self.evidence_ids))
+        evidence_ids = normalize_opaque_identifiers(
+            "evidence_ids", tuple(self.evidence_ids)
+        )
         if not evidence_ids:
             raise ValueError("evidence_ids must contain public provenance")
         object.__setattr__(self, "evidence_ids", evidence_ids)
