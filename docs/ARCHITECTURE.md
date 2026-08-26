@@ -1,11 +1,35 @@
 # Architecture
 
+## Prospective cognitive-architecture boundary
+
+The framework is the reusable substrate, not the artificial organism's scientific configuration.
+
+```text
+learning lab
+    ├─ environment and public perception adapters
+    ├─ experiment hypotheses, values/configurations and protocols
+    ├─ thin subsystem implementations under test
+    └─ imports
+          ↓
+framework
+    ├─ typed CognitiveState and cognitive subsystem ports
+    ├─ generic evidence/provenance/versioning
+    ├─ replay, comparison, metrics and ablation
+    └─ no lab import and no experiment science
+```
+
+Reusable cross-module concepts belong here: beliefs, uncertainty, needs, multi-dimensional value, hard constraints, predictions/errors, memory-role records, plans, action proposals, executive/arbitration traces and learning-update provenance.
+
+Environment mechanics, native semantics, seeds, thresholds, policy configurations and scientific interpretation stay in the learning lab. An LLM is an optional interface client; no natural-language field may silently control the cognitive loop.
+
+Before adding code, apply [the DRY and ownership policy](DRY_AND_CODE_OWNERSHIP.md). The phased platform plan is [the cognitive architecture roadmap](COGNITIVE_ARCHITECTURE_ROADMAP.md).
+
 ## Boundaries
 
 | Layer | Owns | Does not own |
 | --- | --- | --- |
-| **Framework** (`cogniverse_framework`) | Replay/compare APIs, adapters as thin contracts, artifacts, evidence stores, execution lifecycle | Experiment seeds, mutation timings, claim strings, lab-specific strategy ids |
-| **Learning lab** | EXP-042 science, injected fixture data, claim naming, CI pins of this package | Reimplementing generic divergence/ancestry helpers |
+| **Framework** (`cogniverse_framework`) | Generic cognitive contracts/ports, replay/compare APIs, artifacts, evidence stores, execution lifecycle | Experiment seeds, mutation timings, claim strings, lab-specific strategy IDs, environment mechanics |
+| **Learning lab** | Experiment science, environments, injected fixtures/configuration, claim naming, pinned framework dependency | Reimplementing generic cognitive contracts, provenance, divergence, ancestry, metrics or ablation helpers |
 
 Experiment lifecycle:
 
