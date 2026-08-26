@@ -82,6 +82,8 @@ No code behavior changes.
 
 ## Phase F1 — minimal cognitive contracts
 
+Status: **foundation implemented; consumer conformance remains open**. `CognitiveState` and provenance-bearing `CognitiveReference` v1 provide the first immutable coordination snapshot. This does not satisfy the F1 exit gate until two learning-lab loops pass exact legacy equivalence.
+
 Research/engineering question:
 
 > Can two different learning-lab loops exchange the same typed cognitive snapshot with exact legacy behavior?
