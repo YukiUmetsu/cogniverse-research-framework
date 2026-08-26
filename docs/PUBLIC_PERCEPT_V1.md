@@ -25,6 +25,7 @@ Validation shared with `CognitiveState` moved to one internal module, avoiding a
 | Metric | Result | Meaning |
 | --- | ---: | --- |
 | Focused perception tests | **7/7 PASS** | Contract, rejection, immutability, serialization, and value-channel behavior |
+| Full framework tests | **52/52 PASS** | Existing execution, replay, evidence, learning, and cognition behavior remained green |
 | Independent checks | **8/8 PASS twice** | Separate fixture reconstruction and negative boundary agreed |
 | Existing state digest | `32c435fe…07f7` | `CognitiveState` serialization stayed unchanged |
 | Percept digest | `6deedb68…ddcf` | Deterministic `PublicPercept` fixture identity |
