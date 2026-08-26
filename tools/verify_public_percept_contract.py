@@ -34,6 +34,19 @@ def verify() -> dict[str, bool | str]:
         separators=(",", ":"),
         sort_keys=True,
     )
+    value_channel_rejected = False
+    try:
+        PublicPercept(
+            percept_id="percept-12",
+            modality=PerceptModality.STRUCTURED,
+            source_system="reward-policy",
+            logical_step=12,
+            content_sha256="a" * 64,
+            evidence_ids=("event-12",),
+        )
+    except ValueError:
+        value_channel_rejected = True
+
     checks = {
         "schema_exact": payload["schema_version"] == "public_percept.v1",
         "canonical_json_exact": percept.canonical_json() == independently_serialized,
@@ -43,6 +56,7 @@ def verify() -> dict[str, bool | str]:
         "provenance_normalized": payload["evidence_ids"] == ["event-12", "sensor-2"],
         "no_decision_fields": {"reward", "selected_action", "prompt", "reasoning"}.isdisjoint(payload),
         "no_raw_payload": {"text", "bytes", "payload", "observation"}.isdisjoint(payload),
+        "identifier_value_channel_rejected": value_channel_rejected,
     }
     return {**checks, "canonical_digest": percept.digest()}
 
