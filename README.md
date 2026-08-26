@@ -11,6 +11,7 @@ Start with:
 - [Cognitive architecture framework roadmap](docs/COGNITIVE_ARCHITECTURE_ROADMAP.md)
 - [DRY and code-ownership policy](docs/DRY_AND_CODE_OWNERSHIP.md)
 - [Architecture boundaries](docs/ARCHITECTURE.md)
+- [PublicPercept v1 contract](docs/PUBLIC_PERCEPT_V1.md)
 
 ---
 
@@ -128,7 +129,7 @@ More detail for contributors: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Install
 
-Current version: **0.3.0** (see `pyproject.toml`).
+Current version: **0.4.0** (see `pyproject.toml`).
 
 **On your machine, while developing against a local copy:**
 
@@ -181,6 +182,8 @@ print(state.digest())
 ```
 
 The contract has no LLM dependency, selected-action authority, scalar reward, task semantics, or memory backend. See [the v1 foundation report](docs/COGNITIVE_STATE_V1.md).
+
+A separate immutable `PublicPercept` envelope identifies public perceptual content without embedding raw observations or promoting them to beliefs. It records modality, logical time, content SHA-256, confidence or explicit unknown, and public provenance. Environment decoding remains outside the framework. See [PublicPercept v1](docs/PUBLIC_PERCEPT_V1.md).
 
 ---
 

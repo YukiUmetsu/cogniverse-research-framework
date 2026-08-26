@@ -11,38 +11,9 @@ from dataclasses import dataclass, field
 from enum import Enum
 import hashlib
 import json
-import re
 from typing import Any, ClassVar
 
-
-_FORBIDDEN_IDENTIFIER_TOKENS = frozenset(
-    {"answer", "evaluator", "future", "hidden", "private"}
-)
-
-
-def _validate_identifier(name: str, value: str) -> None:
-    if not isinstance(value, str) or not value.strip() or value != value.strip():
-        raise ValueError(f"{name} must be a non-empty trimmed string")
-    tokens = set(filter(None, re.split(r"[^a-z0-9]+", value.lower())))
-    forbidden = sorted(tokens & _FORBIDDEN_IDENTIFIER_TOKENS)
-    if forbidden:
-        raise ValueError(f"{name} contains forbidden marker: {forbidden[0]}")
-
-
-def _normalize_identifiers(name: str, values: tuple[str, ...]) -> tuple[str, ...]:
-    normalized = tuple(values)
-    for value in normalized:
-        _validate_identifier(name, value)
-    if len(normalized) != len(set(normalized)):
-        raise ValueError(f"{name} must contain unique identifiers")
-    return tuple(sorted(normalized))
-
-
-def _validate_ppm(name: str, value: int | None) -> None:
-    if value is None:
-        return
-    if isinstance(value, bool) or not isinstance(value, int) or not 0 <= value <= 1_000_000:
-        raise ValueError(f"{name} must be None or an integer from 0 to 1000000")
+from ._validation import normalize_identifiers, validate_identifier, validate_ppm
 
 
 class ReferenceKind(str, Enum):
@@ -79,15 +50,15 @@ class CognitiveReference:
     memory_kind: MemoryKind | None = None
 
     def __post_init__(self) -> None:
-        _validate_identifier("ref_id", self.ref_id)
-        _validate_identifier("source_system", self.source_system)
+        validate_identifier("ref_id", self.ref_id)
+        validate_identifier("source_system", self.source_system)
         if isinstance(self.logical_step, bool) or not isinstance(self.logical_step, int) or self.logical_step < 0:
             raise ValueError("logical_step must be a non-negative integer")
-        _validate_ppm("confidence_ppm", self.confidence_ppm)
+        validate_ppm("confidence_ppm", self.confidence_ppm)
         object.__setattr__(
             self,
             "evidence_ids",
-            _normalize_identifiers("evidence_ids", tuple(self.evidence_ids)),
+            normalize_identifiers("evidence_ids", tuple(self.evidence_ids)),
         )
         if self.kind is ReferenceKind.MEMORY and self.memory_kind is None:
             raise ValueError("memory_kind is required for memory references")
@@ -125,10 +96,10 @@ class CognitiveState:
     hard_constraint_ids: tuple[str, ...] = field(default_factory=tuple)
 
     def __post_init__(self) -> None:
-        _validate_identifier("state_id", self.state_id)
+        validate_identifier("state_id", self.state_id)
         if isinstance(self.logical_step, bool) or not isinstance(self.logical_step, int) or self.logical_step < 0:
             raise ValueError("logical_step must be a non-negative integer")
-        _validate_ppm("uncertainty_ppm", self.uncertainty_ppm)
+        validate_ppm("uncertainty_ppm", self.uncertainty_ppm)
 
         collections = (
             ("goals", ReferenceKind.GOAL),
@@ -154,7 +125,7 @@ class CognitiveState:
         object.__setattr__(
             self,
             "hard_constraint_ids",
-            _normalize_identifiers(
+            normalize_identifiers(
                 "hard_constraint_ids", tuple(self.hard_constraint_ids)
             ),
         )

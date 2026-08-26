@@ -1,0 +1,31 @@
+{
+  "base_framework_commit": "6cf19480d27aea34e9134353c85b2d269abca889",
+  "canonical_percept_digest": "6deedb6843c96c4c961f16b8101a8fab1deb64170169958879f225466975ddcf",
+  "canonical_state_digest_unchanged": "32c435fe5230ade4ef5590c016fc39968fca2d9ab11744d4bfa27fcbe7ad07f7",
+  "evidence_class": "framework_interface_conformance",
+  "focused_tests": {
+    "passed": 7,
+    "total": 7
+  },
+  "full_framework_tests": {
+    "passed": 52,
+    "total": 52
+  },
+  "independent_checks": {
+    "passed": 8,
+    "replays": 2,
+    "total": 8
+  },
+  "llm_dependencies": 0,
+  "native_simulator_executions": 0,
+  "outcomes_opened": 0,
+  "schema_version": "cognitive_perception_result.v1",
+  "source_blobs": {
+    "cognition_init": "b7c55a21315351ca77d9623f87830c72ebacabc9",
+    "perception": "df99712cd0c9cbcc206698870d1a754bee89be8e",
+    "state": "a64e3b4f6149a18a646a0970decaef1ed56db2b3",
+    "tests": "b53280371f8d2745af5f2d852bc05215a234fcc4",
+    "validation": "a1bd570ae5bf100b4db8806c9123ea6bc830f617",
+    "verifier": "46580446823203606e4d4209e246ebcc1f0dc72b"
+  }
+}

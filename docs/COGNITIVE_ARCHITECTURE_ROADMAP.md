@@ -22,7 +22,7 @@ The audited framework already has useful platform foundations:
 - thin data-injected adapter patterns;
 - a documented boundary that keeps seeds, timing and claim wording in the lab.
 
-These are precursors. The framework does not yet provide a shared cognitive state, homeostasis/value contracts, prediction-error lifecycle, typed memory roles or executive/arbitration ports.
+These are precursors. The framework now provides the first shared cognitive-state and public-percept contracts, but not homeostasis/value contracts, prediction-error lifecycle, typed memory stores or executive/arbitration ports.
 
 The built-in `Exp042Adapter` remains a compatibility/demo surface. New framework APIs should not use experiment-numbered names.
 
@@ -82,7 +82,7 @@ No code behavior changes.
 
 ## Phase F1 — minimal cognitive contracts
 
-Status: **foundation implemented; consumer conformance remains open**. `CognitiveState` and provenance-bearing `CognitiveReference` v1 provide the first immutable coordination snapshot. This does not satisfy the F1 exit gate until two learning-lab loops pass exact legacy equivalence.
+Status: **cognitive-state conformance complete; perception consumer conformance next**. `CognitiveState` and provenance-bearing `CognitiveReference` v1 passed exact legacy equivalence across two learning-lab loops in CA-I1. `PublicPercept` v1 now provides the smallest immutable public-perception envelope; its first unchanged Learning Lab consumer is still pending.
 
 Research/engineering question:
 
@@ -91,7 +91,7 @@ Research/engineering question:
 First public contracts:
 
 - `CognitiveState`
-- `PerceptRef`
+- `PublicPercept`
 - `BeliefRef`
 - `GoalRef`
 - `NeedState`
