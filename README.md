@@ -1,8 +1,16 @@
 # Cogniverse Research Framework
 
-A shared toolbox for running AI research experiments in a careful, repeatable way.
+A shared toolbox and reusable cognitive substrate for careful, repeatable artificial-intelligence research.
 
 This project does **not** invent the science of any one experiment. It gives researchers a common place to run trials, save what happened, compare two runs, and check that claims are backed by evidence — so each new experiment does not have to rebuild those basics from scratch.
+
+Cogniverse is now evolving toward a brain-inspired cognitive architecture. This repository will own generic typed cognitive contracts and reusable subsystem machinery; the learning lab will continue to own environments, hypotheses, frozen protocols and scientific claims. An LLM is an optional language/reasoning interface, never the executive controller.
+
+Start with:
+
+- [Cognitive architecture framework roadmap](docs/COGNITIVE_ARCHITECTURE_ROADMAP.md)
+- [DRY and code-ownership policy](docs/DRY_AND_CODE_OWNERSHIP.md)
+- [Architecture boundaries](docs/ARCHITECTURE.md)
 
 ---
 
@@ -110,7 +118,9 @@ When some trial numbers keep failing, you can also ask: *what is different about
 | Shared run lifecycle | The research question and hypothesis |
 | Saving and hashing evidence | Specific seeds, timings, and claim wording |
 | Replay / compare / seed-failure diagnosis helpers | Interpreting what a difference *means* scientifically |
-| Thin adapters as plugs for experiments | Filling those plugs with real experiment data |
+| Generic typed cognitive contracts and subsystem ports | Scientific hypotheses, frozen protocols and outcomes |
+| Reusable provenance, serialization, replay, comparison and ablation | Environment-specific implementations and thin experiment adapters |
+| Compatibility adapters and consumer contracts | Filling shared contracts with real experiment data |
 
 More detail for contributors: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
@@ -142,7 +152,9 @@ Until a tag is published for a change you need, use the editable install above, 
 
 ## Starting a new experiment
 
-Science stays in the **learning lab**. Here you create a **plug (adapter)**, run it through the shared checklist, and keep evidence.
+> **New default:** create the scientific experiment and its thin adapter in the **learning lab**, not in this framework. Add framework code only when the DRY/ownership test shows the concept is experiment-neutral, or when a foundational cognitive contract intrinsically needs shared ownership. Existing experiment-numbered framework adapters remain compatibility demonstrations and must not become the pattern for new science.
+
+Science stays in the **learning lab**. The framework supplies generic contracts and machinery; the lab injects seeds, thresholds, task semantics and claim wording. The scaffold instructions below are retained for compatibility and framework contract demos.
 
 ```text
 Idea (lab) → scaffold files → write adapter → run → save evidence → compare / claim
