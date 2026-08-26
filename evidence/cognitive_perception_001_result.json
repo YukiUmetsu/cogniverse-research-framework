@@ -4,13 +4,13 @@
   "canonical_state_digest_unchanged": "32c435fe5230ade4ef5590c016fc39968fca2d9ab11744d4bfa27fcbe7ad07f7",
   "evidence_class": "framework_interface_conformance",
   "focused_tests": {
-    "passed": 6,
-    "total": 6
+    "passed": 7,
+    "total": 7
   },
   "independent_checks": {
-    "passed": 7,
+    "passed": 8,
     "replays": 2,
-    "total": 7
+    "total": 8
   },
   "llm_dependencies": 0,
   "native_simulator_executions": 0,
@@ -18,10 +18,10 @@
   "schema_version": "cognitive_perception_result.v1",
   "source_blobs": {
     "cognition_init": "b7c55a21315351ca77d9623f87830c72ebacabc9",
-    "perception": "504c73f647e26a44312f2bac64b324130b4facfc",
+    "perception": "df99712cd0c9cbcc206698870d1a754bee89be8e",
     "state": "a64e3b4f6149a18a646a0970decaef1ed56db2b3",
-    "tests": "d7ed68db065cc6a643bfadc6027f833cd6ccaba8",
-    "validation": "6583cc630e7a3924eb2c3adc783754a74a1e6d9b",
-    "verifier": "a73f50446c5caef02d061fe8e30a9f42599c28f8"
+    "tests": "b53280371f8d2745af5f2d852bc05215a234fcc4",
+    "validation": "a1bd570ae5bf100b4db8806c9123ea6bc830f617",
+    "verifier": "46580446823203606e4d4209e246ebcc1f0dc72b"
   }
 }
