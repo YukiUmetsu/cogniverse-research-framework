@@ -26,12 +26,13 @@ Cogniverse cognition is moving from a linear pipeline mental model toward **dyna
 | `InMemoryActiveCognitionRuntime` | **Implemented** |
 | `ActiveCognitionSnapshot` → `CognitiveState` projection | **Implemented** |
 | `ActivePerceptionConsumer` (`PublicPercept` bridge) | **Implemented** |
+| `CognitiveGap` / `InformationNeed` | **Implemented** |
+| `RetrievalRequest` / `RetrievalResult` / controller | **Implemented** |
+| Memory role ports + in-memory stores | **Implemented** |
 | Operation-log replay with stable digest | **Implemented** |
 | Redis / external activation stores | **Proposed** |
 | `CognitiveEventBus` | **Proposed** |
-| `CognitiveGap` / `InformationNeed` | **Proposed** |
-| `RetrievalController` | **Proposed** |
-| Episodic / semantic / procedural memory ports | **Proposed** |
+| Retrieval → WM/primed feedback loop | **Proposed** |
 | World model / prediction deltas | **Proposed** |
 | Scientific validation of activation policy | **Not yet tested scientifically** |
 
@@ -41,7 +42,7 @@ Cogniverse cognition is moving from a linear pipeline mental model toward **dyna
 | --- | ---: | --- |
 | Active cognition focused tests | 11/11 PASS | Graph, runtime, replay, projection |
 | Active perception bridge tests | 7/7 PASS | PublicPercept → runtime → CognitiveState |
-| Full framework tests | 70/70 PASS | No regression in existing packages |
+| Full framework tests | 75/75 PASS | No regression in existing packages |
 | `CognitiveState` v1 digest | unchanged | `32c435fe…07f7` |
 | Active cognition verifier digest | `e8ac96a6…c216` | Deterministic replay fixture |
 | Perception pipeline verifier digest | `84acaf19…e8bf` | PublicPercept bridge fixture |
@@ -157,9 +158,11 @@ PYTHONPATH=src python scripts/verify_active_perception_pipeline.py
 
 ## 8. What is next
 
-1. Pin framework commit in Learning Lab and wire one real public-observation source through `ActivePerceptionConsumer`.
-2. Add `CognitiveGap` and retrieval ports (F4 retrieval foundation).
-3. Introduce `CognitiveEventBus` with in-memory backend before optional Redis.
-4. Run controlled ablations on activation/spreading/capacity — only then label mechanisms **experimentally validated**.
+1. Feed `RetrievalResult` candidates back into primed/working memory in the active runtime.
+2. Introduce `CognitiveEventBus` with in-memory backend before optional Redis.
+3. Pin framework commit in Learning Lab and run the full perception → active cognition → gap-driven retrieval loop.
+4. Run controlled ablations — only then label mechanisms **experimentally validated**.
+
+See [Retrieval foundation v1](RETRIEVAL_FOUNDATION_V1.md).
 
 See also: [Active Cognition Architecture Audit](ACTIVE_COGNITION_ARCHITECTURE_AUDIT.md).

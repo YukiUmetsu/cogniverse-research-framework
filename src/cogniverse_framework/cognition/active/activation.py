@@ -33,6 +33,7 @@ class ActivationReason(str, Enum):
     CAPACITY_EVICTION = "capacity_eviction"
     PRIMED_THRESHOLD_MET = "primed_threshold_met"
     BELOW_PRIMED_THRESHOLD = "below_primed_threshold"
+    BELOW_WORKING_THRESHOLD = "below_working_threshold"
 
 
 @dataclass(frozen=True, slots=True)

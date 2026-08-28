@@ -188,7 +188,30 @@ Add:
 
 Do not implement one benchmark's transition model in the framework. Model algorithms may be promoted only after the ownership gate.
 
-## Phase F4 — memory roles and consolidation
+## Phase F4 — retrieval foundation
+
+Status: **reference implementation complete; runtime feedback loop pending**.
+
+Deliverables (implemented):
+
+- `CognitiveGap`, `InformationNeed`;
+- `RetrievalRequest`, `RetrievalResult`, transparent `RetrievalRankingPolicy`;
+- episodic / semantic / procedural memory ports and in-memory stores;
+- `detect_cognitive_gaps` from `ActiveCognitionSnapshot`;
+- `InMemoryRetrievalController`.
+
+Not in this phase: vector backends, learned ranking, retrieval → WM feedback, Redis.
+
+Exit gate:
+
+- framework unit/contract tests;
+- deterministic gap → request → ranked result replay;
+- `CognitiveState` v1 digest unchanged;
+- one lab consumer fixture (pending).
+
+See [RETRIEVAL_FOUNDATION_V1.md](RETRIEVAL_FOUNDATION_V1.md).
+
+## Phase F4b — memory roles and consolidation
 
 Add generic records/ports for:
 

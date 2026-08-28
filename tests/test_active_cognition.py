@@ -150,7 +150,31 @@ class InMemoryActiveCognitionRuntimeTests(unittest.TestCase):
         self.assertEqual(len(working_ids), 2)
         self.assertIn("node-c", working_ids)
         self.assertNotIn("node-b", working_ids)
-        self.assertTrue(any(record.node_id == "node-b" for record in runtime.eviction_records))
+        self.assertTrue(
+            any(
+                record.node_id == "node-b"
+                and record.reason is ActivationReason.CAPACITY_EVICTION
+                for record in runtime.eviction_records
+            )
+        )
+
+    def test_decay_below_threshold_uses_working_threshold_eviction_reason(self) -> None:
+        runtime = InMemoryActiveCognitionRuntime(
+            policy(perception_boost_ppm=350_000, working_threshold_ppm=300_000),
+            working_capacity=4,
+        )
+        runtime.add_perceived_node(node("node-a", logical_step=1))
+        self.assertIn("node-a", runtime.working_memory.node_ids())
+        runtime.advance(2)
+        runtime.advance(3)
+        self.assertNotIn("node-a", runtime.working_memory.node_ids())
+        self.assertTrue(
+            any(
+                record.node_id == "node-a"
+                and record.reason is ActivationReason.BELOW_WORKING_THRESHOLD
+                for record in runtime.eviction_records
+            )
+        )
 
     def test_primed_memory_holds_subthreshold_candidates(self) -> None:
         runtime = InMemoryActiveCognitionRuntime(

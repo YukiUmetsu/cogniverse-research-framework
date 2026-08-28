@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
@@ -58,7 +59,7 @@ class ActivePerceptionConsumer:
     """Thin framework consumer: PublicPercept -> active runtime -> CognitiveState.
 
     Environment decoding stays outside this class. Callers pass already-built
-  ``PublicPercept`` envelopes from lab or fixture adapters.
+    ``PublicPercept`` envelopes from lab or fixture adapters.
     """
 
     def __init__(
@@ -145,6 +146,7 @@ class ActivePerceptionConsumer:
             evidence_ids=_paired_percept_evidence(source, target),
         )
         self._runtime.add_edge(edge)
+        self._runtime.spread_from_node(source_id, logical_step=logical_step)
         return edge
 
     def advance(self, logical_step: int) -> ActiveCognitionSnapshot:
@@ -221,7 +223,11 @@ def _default_edge_id(
     target_id: str,
     relation: EdgeRelation,
 ) -> str:
-    return f"edge.{source_id}.{relation.value}.{target_id}"[:128]
+    raw = f"edge.{source_id}.{relation.value}.{target_id}"
+    if len(raw) <= 128:
+        return raw
+    digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
+    return f"edge.{digest}"
 
 
 def _state_id_for_step(logical_step: int) -> str:

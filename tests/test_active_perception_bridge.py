@@ -89,7 +89,6 @@ class ActivePerceptionConsumerTests(unittest.TestCase):
         consumer.receive(left)
         consumer.receive(right)
         consumer.link_percepts(left, right, relation=EdgeRelation.ASSOCIATED_WITH)
-        consumer.receive(left)
 
         neighbor = consumer.runtime.graph.get_node("percept.entity-b")
         self.assertIsNotNone(neighbor)

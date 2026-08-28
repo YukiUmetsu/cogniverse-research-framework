@@ -186,6 +186,14 @@ class InMemoryActiveCognitionRuntime:
                 raise ValueError(f"unsupported replay operation: {op_type}")
         return runtime.snapshot()
 
+    def spread_from_node(self, node_id: str, *, logical_step: int) -> None:
+        """Spread activation from an existing node to its graph neighbors."""
+
+        if self._state.graph.get_node(node_id) is None:
+            raise ValueError("cannot spread activation from unknown node_id")
+        self._spread_activation(from_node_id=node_id, logical_step=logical_step)
+        self._refresh_memory_layers(logical_step=logical_step)
+
     def _spread_activation(self, *, from_node_id: str, logical_step: int) -> None:
         for neighbor_id in self._state.graph.neighbor_ids(from_node_id):
             neighbor = self._state.graph.get_node(neighbor_id)
@@ -233,11 +241,15 @@ class InMemoryActiveCognitionRuntime:
             node = self._state.graph.get_node(node_id)
             if node is None:
                 continue
+            if node.activation_ppm < self._policy.working_threshold_ppm:
+                reason = ActivationReason.BELOW_WORKING_THRESHOLD
+            else:
+                reason = ActivationReason.CAPACITY_EVICTION
             evictions.append(
                 MemoryEvictionRecord(
                     node_id=node_id,
                     logical_step=logical_step,
-                    reason=ActivationReason.CAPACITY_EVICTION,
+                    reason=reason,
                     activation_ppm=node.activation_ppm,
                 )
             )
