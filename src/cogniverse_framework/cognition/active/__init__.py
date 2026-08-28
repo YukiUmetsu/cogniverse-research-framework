@@ -1,25 +1,30 @@
-"""Environment-neutral cognitive coordination contracts."""
+"""Active cognition runtime contracts."""
 
-from .active import (
+from .activation import (
     ActivationPolicy,
     ActivationReason,
     ActivationRecord,
     ActivationSource,
-    ActiveCognitionSnapshot,
+    apply_boost,
+    apply_decay,
+)
+from .graph import (
     ActiveCognitiveEdge,
     ActiveCognitiveGraph,
     ActiveCognitiveNode,
     EdgeRelation,
-    InMemoryActiveCognitionRuntime,
-    MemoryEvictionRecord,
     NodeCategory,
+    clamp_activation_ppm,
+)
+from .memory import (
+    MemoryEvictionRecord,
     PrimedMemory,
     PrimedMemoryItem,
     WorkingMemory,
     WorkingMemoryItem,
 )
-from .perception import PerceptModality, PublicPercept
-from .state import CognitiveReference, CognitiveState, MemoryKind, ReferenceKind
+from .runtime import InMemoryActiveCognitionRuntime
+from .snapshot import ActiveCognitionSnapshot
 
 __all__ = [
     "ActivationPolicy",
@@ -30,18 +35,15 @@ __all__ = [
     "ActiveCognitiveEdge",
     "ActiveCognitiveGraph",
     "ActiveCognitiveNode",
-    "CognitiveReference",
-    "CognitiveState",
     "EdgeRelation",
     "InMemoryActiveCognitionRuntime",
     "MemoryEvictionRecord",
-    "MemoryKind",
     "NodeCategory",
-    "PerceptModality",
     "PrimedMemory",
     "PrimedMemoryItem",
-    "PublicPercept",
-    "ReferenceKind",
     "WorkingMemory",
     "WorkingMemoryItem",
+    "apply_boost",
+    "apply_decay",
+    "clamp_activation_ppm",
 ]

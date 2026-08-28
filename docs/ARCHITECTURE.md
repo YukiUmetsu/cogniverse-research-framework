@@ -1,5 +1,21 @@
 # Architecture
 
+## Active cognition substrate
+
+The live runtime centers on a small **Active Cognitive Graph** with **Working Memory**, **Primed Memory**, and a deterministic **Activation** mechanism. `CognitiveState` remains the immutable snapshot boundary for evidence, replay, and audit — it is not mutable working memory.
+
+| Concept | Role | Status |
+| --- | --- | --- |
+| `CognitiveState` | Immutable auditable snapshot | Implemented (v1) |
+| `ActiveCognitiveGraph` | Live relational workspace | Implemented (v1) |
+| `WorkingMemory` | Bounded active material | Implemented (v1) |
+| `PrimedMemory` | Partially activated candidates | Implemented (v1) |
+| `ActivationPolicy` | Injected decay/boost thresholds | Implemented (v1) |
+| `RetrievalController` | Goal/gap-driven memory search | Proposed |
+| Long-term memory ports | Episodic / semantic / procedural | Proposed |
+
+Redis and other stores are optional backends only; framework tests run without them.
+
 ## Prospective cognitive-architecture boundary
 
 The framework is the reusable substrate, not the artificial organism's scientific configuration.

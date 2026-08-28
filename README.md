@@ -12,6 +12,7 @@ Start with:
 - [DRY and code-ownership policy](docs/DRY_AND_CODE_OWNERSHIP.md)
 - [Architecture boundaries](docs/ARCHITECTURE.md)
 - [PublicPercept v1 contract](docs/PUBLIC_PERCEPT_V1.md)
+- [Active cognition v1 foundation](docs/ACTIVE_COGNITION_V1.md)
 
 ---
 
@@ -184,6 +185,17 @@ print(state.digest())
 The contract has no LLM dependency, selected-action authority, scalar reward, task semantics, or memory backend. See [the v1 foundation report](docs/COGNITIVE_STATE_V1.md).
 
 A separate immutable `PublicPercept` envelope identifies public perceptual content without embedding raw observations or promoting them to beliefs. It records modality, logical time, content SHA-256, confidence or explicit unknown, and public provenance. Environment decoding remains outside the framework. See [PublicPercept v1](docs/PUBLIC_PERCEPT_V1.md).
+
+### Active cognition substrate (v1)
+
+The framework now includes a deterministic in-memory active cognition runtime:
+
+- `ActiveCognitiveGraph` — small typed relational workspace;
+- `WorkingMemory` / `PrimedMemory` — bounded active material and candidates;
+- `ActivationPolicy` — injected weights and thresholds (no hidden experiment policy);
+- `ActiveCognitionSnapshot` — immutable bundle projecting into `CognitiveState` v1.
+
+This is contract and machinery evidence only — not a claim that the default activation policy is cognitively correct. See [Active cognition v1](docs/ACTIVE_COGNITION_V1.md).
 
 ---
 

@@ -82,7 +82,7 @@ No code behavior changes.
 
 ## Phase F1 — minimal cognitive contracts
 
-Status: **cognitive-state conformance complete; perception consumer conformance next**. `CognitiveState` and provenance-bearing `CognitiveReference` v1 passed exact legacy equivalence across two learning-lab loops in CA-I1. `PublicPercept` v1 now provides the smallest immutable public-perception envelope; its first unchanged Learning Lab consumer is still pending.
+Status: **cognitive-state conformance complete; perception consumer conformance next**.
 
 Research/engineering question:
 
@@ -126,6 +126,31 @@ Exit gate:
 - exact legacy action/event/evidence equivalence;
 - no LLM dependency;
 - no held-out task outcome needed.
+
+## Phase F1.5 — active cognition foundation
+
+Status: **reference implementation complete; lab consumer pending**.
+
+Deliverables (implemented):
+
+- `ActiveCognitiveGraph` v1 with typed nodes and edges;
+- `WorkingMemory` v1 and `PrimedMemory` v1;
+- `ActivationPolicy`, `ActivationRecord`, deterministic decay/spread;
+- `InMemoryActiveCognitionRuntime` and `ActiveCognitionSnapshot`;
+- projection into unchanged `CognitiveState` v1;
+- framework tests and independent verifier.
+
+Not in this phase: Redis backends, `CognitiveEventBus`, retrieval, cognitive gaps, world model.
+
+Exit gate:
+
+- framework unit/contract tests;
+- deterministic operation-log replay;
+- `CognitiveState` v1 digest unchanged;
+- one lab consumer fixture (pending);
+- no LLM dependency.
+
+See [ACTIVE_COGNITION_V1.md](ACTIVE_COGNITION_V1.md) and [ACTIVE_COGNITION_ARCHITECTURE_AUDIT.md](ACTIVE_COGNITION_ARCHITECTURE_AUDIT.md).
 
 ## Phase F2 — value, safety and homeostasis contracts
 
