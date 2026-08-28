@@ -125,9 +125,8 @@ class InMemoryActiveCognitionRuntime:
         )
         existing = self._state.graph.get_node(node.node_id)
         previous_activation = existing.activation_ppm if existing is not None else 0
-        base = apply_boost(previous_activation, boost_ppm=self._policy.perception_boost_ppm)
         activated = node.with_activation(
-            apply_boost(base, boost_ppm=boost),
+            apply_boost(previous_activation, boost_ppm=boost),
             logical_step=node.logical_step,
         )
         self._state.graph = self._state.graph.with_node(activated)

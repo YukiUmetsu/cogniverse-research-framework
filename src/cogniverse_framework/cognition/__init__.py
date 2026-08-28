@@ -5,6 +5,7 @@ from .active import (
     ActivationReason,
     ActivationRecord,
     ActivationSource,
+    ActiveCognitionAblationConfig,
     ActiveCognitionCoordinator,
     ActiveCognitionCycleResult,
     ActiveCognitionSnapshot,
@@ -23,8 +24,10 @@ from .active import (
     WorkingMemory,
     WorkingMemoryItem,
     apply_retrieval_result,
+    build_ablation_coordinator,
     default_percept_node_id,
     memory_node_id,
+    run_ablated_cycle,
 )
 from .backends import (
     ActivationStorePort,
@@ -40,6 +43,8 @@ from .backends import (
     create_event_bus,
     create_memory_store_set,
 )
+from .homeostasis import HomeostaticUpdate, NeedState
+from .legacy import LegacyScalarRewardAdapter
 from .perception import PerceptModality, PublicPercept
 from .retrieval.controller import (
     InMemoryRetrievalController,
@@ -65,6 +70,13 @@ from .retrieval import (
     semantic_memory_record,
 )
 from .state import CognitiveReference, CognitiveState, MemoryKind, ReferenceKind
+from .value import (
+    ConstraintScope,
+    ConstraintViolation,
+    HardConstraint,
+    ValueEstimate,
+    ValueVector,
+)
 
 __all__ = [
     "ActivationPolicy",
@@ -72,6 +84,7 @@ __all__ = [
     "ActivationRecord",
     "ActivationSource",
     "ActivationStorePort",
+    "ActiveCognitionAblationConfig",
     "ActiveCognitionCoordinator",
     "ActiveCognitionCycleResult",
     "ActiveCognitionSnapshot",
@@ -101,6 +114,12 @@ __all__ = [
     "MemoryEvictionRecord",
     "MemoryKind",
     "MemoryStoreSetPort",
+    "ConstraintScope",
+    "ConstraintViolation",
+    "HardConstraint",
+    "HomeostaticUpdate",
+    "LegacyScalarRewardAdapter",
+    "NeedState",
     "NodeCategory",
     "PerceptModality",
     "PrimedMemory",
@@ -116,9 +135,12 @@ __all__ = [
     "RetrievalSessionResult",
     "RetrievalSignal",
     "SemanticMemoryRecord",
+    "ValueEstimate",
+    "ValueVector",
     "WorkingMemory",
     "WorkingMemoryItem",
     "apply_retrieval_result",
+    "build_ablation_coordinator",
     "create_activation_store",
     "create_event_bus",
     "create_memory_store_set",
@@ -127,5 +149,6 @@ __all__ = [
     "episodic_memory_record",
     "memory_node_id",
     "procedural_memory_record",
+    "run_ablated_cycle",
     "semantic_memory_record",
 ]

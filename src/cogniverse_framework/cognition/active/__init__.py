@@ -23,6 +23,11 @@ from .memory import (
     WorkingMemory,
     WorkingMemoryItem,
 )
+from .ablation import (
+    ActiveCognitionAblationConfig,
+    build_ablation_coordinator,
+    run_ablated_cycle,
+)
 from .coordinator import ActiveCognitionCoordinator, ActiveCognitionCycleResult
 from .perception_bridge import (
     ActivePerceptionConsumer,
@@ -39,6 +44,7 @@ __all__ = [
     "ActivationReason",
     "ActivationRecord",
     "ActivationSource",
+    "ActiveCognitionAblationConfig",
     "ActiveCognitionCoordinator",
     "ActiveCognitionCycleResult",
     "ActiveCognitionSnapshot",
@@ -59,7 +65,9 @@ __all__ = [
     "apply_boost",
     "apply_decay",
     "apply_retrieval_result",
+    "build_ablation_coordinator",
     "clamp_activation_ppm",
     "default_percept_node_id",
     "memory_node_id",
+    "run_ablated_cycle",
 ]

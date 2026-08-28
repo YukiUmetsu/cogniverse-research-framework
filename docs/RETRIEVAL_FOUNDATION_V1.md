@@ -36,7 +36,8 @@ Memory retrieval should be driven by **cognitive gaps and goals**, not surface s
 | Metric | Result |
 | --- | ---: |
 | Retrieval foundation tests | 5/5 PASS |
-| Full framework tests | 75/75 PASS |
+| Cognition backends + coordinator tests | 6/6 PASS |
+| Full framework tests | 92/92 PASS |
 | Retrieval verifier result digest | `188c6044…941a` |
 | `CognitiveState` v1 digest | unchanged |
 
@@ -110,8 +111,8 @@ All thresholds are injected by callers/experiments.
 ## 7. Limitations
 
 - Ranking is transparent integer ppm math, not learned.
-- In-memory stores are reference backends only.
-- Retrieval results are not yet fed back into `InMemoryActiveCognitionRuntime`.
+- In-memory stores are reference backends only; Redis optional.
+- Retrieval results are fed back via `apply_retrieval_result()` and `ActiveCognitionCoordinator`.
 - Passing tests do not prove retrieval improves task performance.
 
 ## 8. What is next

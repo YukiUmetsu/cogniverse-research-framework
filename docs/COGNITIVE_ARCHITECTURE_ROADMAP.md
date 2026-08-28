@@ -129,7 +129,7 @@ Exit gate:
 
 ## Phase F1.5 — active cognition foundation
 
-Status: **reference implementation complete; lab consumer pending**.
+Status: **reference implementation complete; framework fixture complete; lab consumer pending**.
 
 Deliverables (implemented):
 
@@ -138,21 +138,27 @@ Deliverables (implemented):
 - `ActivationPolicy`, `ActivationRecord`, deterministic decay/spread;
 - `InMemoryActiveCognitionRuntime` and `ActiveCognitionSnapshot`;
 - projection into unchanged `CognitiveState` v1;
-- framework tests and independent verifier.
+- `ActiveCognitionCoordinator` with pluggable backends;
+- `CognitiveEventBus` (in-memory + optional Redis);
+- retrieval → WM feedback loop;
+- framework tests, reference fixture, and independent verifiers.
 
-Not in this phase: Redis backends, `CognitiveEventBus`, retrieval, cognitive gaps, world model.
+Not in this phase: world model, distributed runtime sync, scientific validation.
 
 Exit gate:
 
-- framework unit/contract tests;
+- framework unit/contract tests (92/92 PASS);
 - deterministic operation-log replay;
 - `CognitiveState` v1 digest unchanged;
-- one lab consumer fixture (pending);
+- framework reference coordinator fixture (complete);
+- one lab consumer fixture (pending — Learning Lab);
 - no LLM dependency.
 
 See [ACTIVE_COGNITION_V1.md](ACTIVE_COGNITION_V1.md) and [ACTIVE_COGNITION_ARCHITECTURE_AUDIT.md](ACTIVE_COGNITION_ARCHITECTURE_AUDIT.md).
 
 ## Phase F2 — value, safety and homeostasis contracts
+
+Status: **reference contracts implemented; lab validation pending**.
 
 Add only generic records and policies:
 
@@ -164,6 +170,8 @@ Add only generic records and policies:
 - `LegacyScalarRewardAdapter`.
 
 Keep environment need dynamics and scientific weighting configurations injectable from the lab.
+
+See [VALUE_HOMEOSTASIS_V1.md](VALUE_HOMEOSTASIS_V1.md).
 
 Exit gate:
 
@@ -190,24 +198,26 @@ Do not implement one benchmark's transition model in the framework. Model algori
 
 ## Phase F4 — retrieval foundation
 
-Status: **reference implementation complete; runtime feedback loop pending**.
+Status: **reference implementation complete; lab consumer pending**.
 
 Deliverables (implemented):
 
 - `CognitiveGap`, `InformationNeed`;
 - `RetrievalRequest`, `RetrievalResult`, transparent `RetrievalRankingPolicy`;
-- episodic / semantic / procedural memory ports and in-memory stores;
+- episodic / semantic / procedural memory ports and pluggable stores;
 - `detect_cognitive_gaps` from `ActiveCognitionSnapshot`;
-- `InMemoryRetrievalController`.
+- `RetrievalController` with retrieval → WM feedback via coordinator;
+- `CognitiveEventBus` integration for gap and retrieval events.
 
-Not in this phase: vector backends, learned ranking, retrieval → WM feedback, Redis.
+Not in this phase: vector backends, learned ranking, scientific validation.
 
 Exit gate:
 
-- framework unit/contract tests;
+- framework unit/contract tests (92/92 PASS);
 - deterministic gap → request → ranked result replay;
 - `CognitiveState` v1 digest unchanged;
-- one lab consumer fixture (pending).
+- framework reference coordinator fixture (complete);
+- one lab consumer fixture (pending — Learning Lab).
 
 See [RETRIEVAL_FOUNDATION_V1.md](RETRIEVAL_FOUNDATION_V1.md).
 

@@ -30,10 +30,14 @@ Cogniverse cognition is moving from a linear pipeline mental model toward **dyna
 | `RetrievalRequest` / `RetrievalResult` / controller | **Implemented** |
 | Memory role ports + in-memory stores | **Implemented** |
 | Operation-log replay with stable digest | **Implemented** |
-| Redis / external activation stores | **Proposed** |
-| `CognitiveEventBus` | **Proposed** |
-| Retrieval → WM/primed feedback loop | **Proposed** |
+| `ActiveCognitionCoordinator` (full perceive → retrieve → feedback) | **Implemented** |
+| Pluggable memory / event / activation backends (in-memory + optional Redis) | **Implemented** |
+| Retrieval → WM/primed feedback loop | **Implemented** |
+| Redis / external activation stores | **Implemented** (optional dependency) |
+| `CognitiveEventBus` | **Implemented** (in-memory + optional Redis) |
+| Framework reference coordinator fixture | **Implemented** |
 | World model / prediction deltas | **Proposed** |
+| Lab consumer equivalence (CA-I1 style) | **Pending** (Learning Lab) |
 | Scientific validation of activation policy | **Not yet tested scientifically** |
 
 ## 3. Contract test results
@@ -42,12 +46,14 @@ Cogniverse cognition is moving from a linear pipeline mental model toward **dyna
 | --- | ---: | --- |
 | Active cognition focused tests | 11/11 PASS | Graph, runtime, replay, projection |
 | Active perception bridge tests | 7/7 PASS | PublicPercept → runtime → CognitiveState |
-| Full framework tests | 75/75 PASS | No regression in existing packages |
+| Cognition backends + coordinator tests | 6/6 PASS | Backends, coordinator, event replay |
+| Full framework tests | 93/93 PASS | No regression in existing packages |
 | `CognitiveState` v1 digest | unchanged | `32c435fe…07f7` |
 | Active cognition verifier digest | `e8ac96a6…c216` | Deterministic replay fixture |
 | Perception pipeline verifier digest | `84acaf19…e8bf` | PublicPercept bridge fixture |
+| Coordinator verifier digest | `fa2343fe…ef160` | Full perceive → retrieve → feedback |
 | LLM dependency | 0 | Runtime works without language models |
-| Redis dependency | 0 | In-memory reference backend only |
+| Redis dependency | 0 (optional) | In-memory default; Redis via `[redis]` extra |
 
 ## 4. Architecture relationships
 
@@ -137,31 +143,28 @@ For batch replay in tests, use `ActivePerceptionConsumer.process_percepts(...)`.
 - Working-memory eviction ranks by current activation with deterministic tie-breaking.
 - `to_cognitive_state()` maps working-memory items to episodic memory refs as a projection convenience; this does not claim episodic storage semantics are complete.
 - Passing contract tests does **not** demonstrate biological or task-level cognitive benefit.
-- Learning Lab consumer equivalence (CA-I1 style) for active cognition is still **proposed**.
+- Learning Lab consumer equivalence (CA-I1 style) for active cognition is still **pending** — see [LAB_ACTIVE_COGNITION_INTEGRATION.md](LAB_ACTIVE_COGNITION_INTEGRATION.md).
 
 ## 7. Learning Lab integration checklist
 
-The framework cannot import the lab. Add this thin consumer in the lab after pinning the framework commit:
+The framework cannot import the lab. Use [LAB_ACTIVE_COGNITION_INTEGRATION.md](LAB_ACTIVE_COGNITION_INTEGRATION.md) and the reference fixture in `tests/test_coordinator_fixture.py`.
 
-1. Keep environment decoding in a lab adapter that outputs `PublicPercept`.
-2. Inject `ActivationPolicy` weights/thresholds from experiment configuration — not from framework defaults.
-3. Instantiate `ActivePerceptionConsumer` once per episode or loop.
-4. On each public observation step: `consumer.receive(percept)` and use `step.cognitive_state` for downstream modules.
-5. Preregister exact legacy equivalence: actions/events/evidence unchanged when the consumer is disabled vs enabled.
-6. Record `snapshot.digest()` and `cognitive_state.digest()` in evidence for replay audit.
+Recommended surface: `ActiveCognitionCoordinator` with lab-injected policies and pluggable backends.
 
-Verifier for the framework fixture pipeline:
+Verifiers:
 
 ```bash
 PYTHONPATH=src python scripts/verify_active_perception_pipeline.py
+PYTHONPATH=src python scripts/verify_active_cognition_coordinator.py
 ```
 
 ## 8. What is next
 
-1. Pin framework commit in Learning Lab and run the full coordinator loop in one consumer.
-2. Add optional PostgreSQL/graph/vector memory backends behind the same ports.
-3. Run controlled ablations — only then label mechanisms **experimentally validated**.
+1. Complete Learning Lab consumer wiring (pin commit, CA-I1 equivalence, evidence digests).
+2. F2 value/homeostasis contracts (in progress — see [VALUE_HOMEOSTASIS_V1.md](VALUE_HOMEOSTASIS_V1.md)).
+3. Optional PostgreSQL/graph/vector memory backends behind the same ports.
+4. Run controlled ablations — only then label mechanisms **experimentally validated**.
 
-See [Cognition backends v1](COGNITION_BACKENDS_V1.md) and [Retrieval foundation v1](RETRIEVAL_FOUNDATION_V1.md).
+See [Cognition backends v1](COGNITION_BACKENDS_V1.md), [Retrieval foundation v1](RETRIEVAL_FOUNDATION_V1.md), and [Active cognition ablations](ACTIVE_COGNITION_ABLATIONS.md).
 
 See also: [Active Cognition Architecture Audit](ACTIVE_COGNITION_ARCHITECTURE_AUDIT.md).

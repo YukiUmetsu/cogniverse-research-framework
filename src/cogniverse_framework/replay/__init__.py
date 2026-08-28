@@ -38,6 +38,13 @@ from .seed_diagnosis_types import (
 )
 from .trajectory import Trajectory
 from .transition import Transition
+from .cognitive_events import (
+    CognitiveEventTrace,
+    build_event_trace,
+    compare_event_traces,
+    event_trace_to_evidence_payload,
+    replay_event_trace,
+)
 from .types import (
     DivergencePoint,
     DivergenceResult,
@@ -86,4 +93,9 @@ __all__ = [
     "find_later",
     "audit_sequence_divergence",
     "post_divergence_budget",
+    "CognitiveEventTrace",
+    "build_event_trace",
+    "compare_event_traces",
+    "event_trace_to_evidence_payload",
+    "replay_event_trace",
 ]

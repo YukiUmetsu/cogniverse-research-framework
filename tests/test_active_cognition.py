@@ -281,6 +281,27 @@ class InMemoryActiveCognitionRuntimeTests(unittest.TestCase):
         with self.assertRaises(dataclasses.FrozenInstanceError):
             graph_node.activation_ppm = 1  # type: ignore[misc]
 
+    def test_admit_retrieved_node_uses_retrieval_boost_only(self) -> None:
+        runtime = InMemoryActiveCognitionRuntime(
+            policy(
+                perception_boost_ppm=500_000,
+                retrieval_boost_ppm=200_000,
+            ),
+            working_capacity=2,
+        )
+        perceived = runtime.add_perceived_node(node("node-a", logical_step=1))
+        retrieved = runtime.admit_retrieved_node(node("memory-1", logical_step=1))
+
+        self.assertEqual(perceived.activation_ppm, 500_000)
+        self.assertEqual(retrieved.activation_ppm, 200_000)
+        retrieval_records = [
+            record
+            for record in runtime.activation_records
+            if record.source is ActivationSource.RETRIEVAL
+        ]
+        self.assertEqual(len(retrieval_records), 1)
+        self.assertEqual(retrieval_records[0].reason, ActivationReason.MEMORY_RETRIEVED)
+
     def test_activation_records_include_perception_and_spreading(self) -> None:
         runtime = InMemoryActiveCognitionRuntime(policy(), working_capacity=2)
         runtime.add_perceived_node(node("node-a", logical_step=1))
