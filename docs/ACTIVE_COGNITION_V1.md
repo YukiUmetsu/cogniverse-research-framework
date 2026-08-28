@@ -25,6 +25,7 @@ Cogniverse cognition is moving from a linear pipeline mental model toward **dyna
 | `ActivationPolicy` / `ActivationRecord` | **Implemented** |
 | `InMemoryActiveCognitionRuntime` | **Implemented** |
 | `ActiveCognitionSnapshot` → `CognitiveState` projection | **Implemented** |
+| `ActivePerceptionConsumer` (`PublicPercept` bridge) | **Implemented** |
 | Operation-log replay with stable digest | **Implemented** |
 | Redis / external activation stores | **Proposed** |
 | `CognitiveEventBus` | **Proposed** |
@@ -39,9 +40,11 @@ Cogniverse cognition is moving from a linear pipeline mental model toward **dyna
 | Metric | Result | Meaning |
 | --- | ---: | --- |
 | Active cognition focused tests | 11/11 PASS | Graph, runtime, replay, projection |
-| Full framework tests | 63/63 PASS | No regression in existing packages |
+| Active perception bridge tests | 7/7 PASS | PublicPercept → runtime → CognitiveState |
+| Full framework tests | 70/70 PASS | No regression in existing packages |
 | `CognitiveState` v1 digest | unchanged | `32c435fe…07f7` |
 | Active cognition verifier digest | `e8ac96a6…c216` | Deterministic replay fixture |
+| Perception pipeline verifier digest | `84acaf19…e8bf` | PublicPercept bridge fixture |
 | LLM dependency | 0 | Runtime works without language models |
 | Redis dependency | 0 | In-memory reference backend only |
 
@@ -65,6 +68,8 @@ Live runtime (implemented)
 ```
 
 ## 5. Example
+
+### Direct active runtime
 
 ```python
 from cogniverse_framework.cognition import (
@@ -97,6 +102,34 @@ snapshot = runtime.snapshot()
 state = snapshot.to_cognitive_state(state_id="step-1")
 ```
 
+### PublicPercept bridge (recommended lab integration surface)
+
+```python
+from cogniverse_framework.cognition import (
+    ActivationPolicy,
+    ActivePerceptionConsumer,
+    PublicPercept,
+)
+
+policy = ActivationPolicy(
+    policy_id="lab-injected-policy",
+    decay_ppm=900_000,
+    perception_boost_ppm=500_000,
+    spreading_boost_ppm=150_000,
+    working_threshold_ppm=300_000,
+    primed_threshold_ppm=100_000,
+)
+
+consumer = ActivePerceptionConsumer(policy, working_capacity=4)
+
+# Lab adapter builds PublicPercept from environment-native observations.
+percept = PublicPercept(...)  # from lab adapter
+step = consumer.receive(percept)
+state = step.cognitive_state
+```
+
+For batch replay in tests, use `ActivePerceptionConsumer.process_percepts(...)`.
+
 ## 6. Limitations
 
 - Activation uses transparent integer ppm math, not learned policies.
@@ -105,9 +138,26 @@ state = snapshot.to_cognitive_state(state_id="step-1")
 - Passing contract tests does **not** demonstrate biological or task-level cognitive benefit.
 - Learning Lab consumer equivalence (CA-I1 style) for active cognition is still **proposed**.
 
-## 7. What is next
+## 7. Learning Lab integration checklist
 
-1. Pin framework commit in Learning Lab and add a thin active-cognition consumer.
+The framework cannot import the lab. Add this thin consumer in the lab after pinning the framework commit:
+
+1. Keep environment decoding in a lab adapter that outputs `PublicPercept`.
+2. Inject `ActivationPolicy` weights/thresholds from experiment configuration — not from framework defaults.
+3. Instantiate `ActivePerceptionConsumer` once per episode or loop.
+4. On each public observation step: `consumer.receive(percept)` and use `step.cognitive_state` for downstream modules.
+5. Preregister exact legacy equivalence: actions/events/evidence unchanged when the consumer is disabled vs enabled.
+6. Record `snapshot.digest()` and `cognitive_state.digest()` in evidence for replay audit.
+
+Verifier for the framework fixture pipeline:
+
+```bash
+PYTHONPATH=src python scripts/verify_active_perception_pipeline.py
+```
+
+## 8. What is next
+
+1. Pin framework commit in Learning Lab and wire one real public-observation source through `ActivePerceptionConsumer`.
 2. Add `CognitiveGap` and retrieval ports (F4 retrieval foundation).
 3. Introduce `CognitiveEventBus` with in-memory backend before optional Redis.
 4. Run controlled ablations on activation/spreading/capacity — only then label mechanisms **experimentally validated**.

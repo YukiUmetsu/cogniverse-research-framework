@@ -9,6 +9,9 @@ from .active import (
     ActiveCognitiveEdge,
     ActiveCognitiveGraph,
     ActiveCognitiveNode,
+    ActivePerceptionConsumer,
+    ActivePerceptionPipelineResult,
+    ActivePerceptionStepResult,
     EdgeRelation,
     InMemoryActiveCognitionRuntime,
     MemoryEvictionRecord,
@@ -17,6 +20,7 @@ from .active import (
     PrimedMemoryItem,
     WorkingMemory,
     WorkingMemoryItem,
+    default_percept_node_id,
 )
 from .perception import PerceptModality, PublicPercept
 from .state import CognitiveReference, CognitiveState, MemoryKind, ReferenceKind
@@ -30,6 +34,9 @@ __all__ = [
     "ActiveCognitiveEdge",
     "ActiveCognitiveGraph",
     "ActiveCognitiveNode",
+    "ActivePerceptionConsumer",
+    "ActivePerceptionPipelineResult",
+    "ActivePerceptionStepResult",
     "CognitiveReference",
     "CognitiveState",
     "EdgeRelation",
@@ -44,4 +51,5 @@ __all__ = [
     "ReferenceKind",
     "WorkingMemory",
     "WorkingMemoryItem",
+    "default_percept_node_id",
 ]
