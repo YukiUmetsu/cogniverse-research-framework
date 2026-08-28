@@ -26,7 +26,9 @@ Memory retrieval should be driven by **cognitive gaps and goals**, not surface s
 | `detect_cognitive_gaps` | **Implemented** |
 | `InMemoryRetrievalController` | **Implemented** |
 | Learned retrieval / vector backends | **Proposed** |
-| Applying retrieval results back into activation/WM | **Proposed** |
+| Applying retrieval results back into activation/WM | **Implemented** |
+| `CognitiveEventBus` in-memory + Redis optional | **Implemented** |
+| Pluggable memory/activation/event backends | **Implemented** |
 | Scientific validation | **Not yet tested scientifically** |
 
 ## 3. Contract test results
@@ -114,9 +116,11 @@ All thresholds are injected by callers/experiments.
 
 ## 8. What is next
 
-1. Wire retrieval results into primed/working memory promotion in the active runtime.
-2. Add `CognitiveEventBus` with in-memory backend.
-3. Pin framework commit in Learning Lab and run gap-driven retrieval in one consumer loop.
+1. Pin framework commit in Learning Lab and run `ActiveCognitionCoordinator` in one consumer loop.
+2. Add PostgreSQL/graph/vector backends behind the same memory ports.
+3. Run controlled ablations — only then label mechanisms **experimentally validated**.
+
+See [Cognition backends v1](../COGNITION_BACKENDS_V1.md).
 
 Verifier:
 

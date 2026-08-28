@@ -12,7 +12,7 @@ from .gaps import CognitiveGap, GapKind, InformationNeed
 from .records import LongTermMemoryRecord
 from .requests import RetrievalRequest, RetrievalResult
 from .scoring import RetrievalRankingPolicy, score_memory_record
-from .stores import InMemoryMemoryStoreSet
+from ..backends.inmemory import InMemoryMemoryStoreSet
 
 
 _DEFAULT_ROLES_BY_GAP: dict[GapKind, tuple[MemoryKind, ...]] = {
@@ -45,13 +45,13 @@ class RetrievalSessionResult:
         }
 
 
-class InMemoryRetrievalController:
-    """Goal/gap-driven retrieval over pluggable in-memory memory stores."""
+class RetrievalController:
+    """Goal/gap-driven retrieval over pluggable memory store backends."""
 
     def __init__(
         self,
         policy: RetrievalRankingPolicy,
-        stores: InMemoryMemoryStoreSet | None = None,
+        stores: MemoryStoreSetPort | None = None,
         *,
         source_system: str = "retrieval-controller",
         low_confidence_threshold_ppm: int = 400_000,
@@ -67,7 +67,7 @@ class InMemoryRetrievalController:
         return self._policy
 
     @property
-    def stores(self) -> InMemoryMemoryStoreSet:
+    def stores(self) -> MemoryStoreSetPort:
         return self._stores
 
     def store(self, record: LongTermMemoryRecord) -> LongTermMemoryRecord:
@@ -147,3 +147,6 @@ class InMemoryRetrievalController:
             requests=requests,
             results=results,
         )
+
+
+InMemoryRetrievalController = RetrievalController

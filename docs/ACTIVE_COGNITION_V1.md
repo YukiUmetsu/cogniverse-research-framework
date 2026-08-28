@@ -158,11 +158,10 @@ PYTHONPATH=src python scripts/verify_active_perception_pipeline.py
 
 ## 8. What is next
 
-1. Feed `RetrievalResult` candidates back into primed/working memory in the active runtime.
-2. Introduce `CognitiveEventBus` with in-memory backend before optional Redis.
-3. Pin framework commit in Learning Lab and run the full perception → active cognition → gap-driven retrieval loop.
-4. Run controlled ablations — only then label mechanisms **experimentally validated**.
+1. Pin framework commit in Learning Lab and run the full coordinator loop in one consumer.
+2. Add optional PostgreSQL/graph/vector memory backends behind the same ports.
+3. Run controlled ablations — only then label mechanisms **experimentally validated**.
 
-See [Retrieval foundation v1](RETRIEVAL_FOUNDATION_V1.md).
+See [Cognition backends v1](COGNITION_BACKENDS_V1.md) and [Retrieval foundation v1](RETRIEVAL_FOUNDATION_V1.md).
 
 See also: [Active Cognition Architecture Audit](ACTIVE_COGNITION_ARCHITECTURE_AUDIT.md).

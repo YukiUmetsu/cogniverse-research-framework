@@ -23,12 +23,14 @@ from .memory import (
     WorkingMemory,
     WorkingMemoryItem,
 )
+from .coordinator import ActiveCognitionCoordinator, ActiveCognitionCycleResult
 from .perception_bridge import (
     ActivePerceptionConsumer,
     ActivePerceptionPipelineResult,
     ActivePerceptionStepResult,
     default_percept_node_id,
 )
+from .retrieval_feedback import apply_retrieval_result, memory_node_id
 from .runtime import InMemoryActiveCognitionRuntime
 from .snapshot import ActiveCognitionSnapshot
 
@@ -37,6 +39,8 @@ __all__ = [
     "ActivationReason",
     "ActivationRecord",
     "ActivationSource",
+    "ActiveCognitionCoordinator",
+    "ActiveCognitionCycleResult",
     "ActiveCognitionSnapshot",
     "ActiveCognitiveEdge",
     "ActiveCognitiveGraph",
@@ -54,6 +58,8 @@ __all__ = [
     "WorkingMemoryItem",
     "apply_boost",
     "apply_decay",
+    "apply_retrieval_result",
     "clamp_activation_ppm",
     "default_percept_node_id",
+    "memory_node_id",
 ]

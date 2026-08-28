@@ -1,6 +1,5 @@
 """Gap-driven memory retrieval contracts."""
 
-from .controller import InMemoryRetrievalController, RetrievalSessionResult
 from .gap_detection import detect_cognitive_gaps
 from .gaps import CognitiveGap, GapKind, InformationNeed
 from .ports import (
@@ -21,7 +20,6 @@ from .records import (
 from .requests import RetrievalCandidate, RetrievalRequest, RetrievalResult
 from .scoring import RetrievalRankingPolicy, score_memory_record
 from .signals import RetrievalScoreComponent, RetrievalSignal
-from .stores import InMemoryMemoryStore, InMemoryMemoryStoreSet
 
 __all__ = [
     "CognitiveGap",
@@ -29,9 +27,6 @@ __all__ = [
     "EpisodicMemoryRecord",
     "GapKind",
     "InformationNeed",
-    "InMemoryMemoryStore",
-    "InMemoryMemoryStoreSet",
-    "InMemoryRetrievalController",
     "LongTermMemoryRecord",
     "MemoryStorePort",
     "ProceduralMemoryPort",
@@ -41,7 +36,6 @@ __all__ = [
     "RetrievalRequest",
     "RetrievalResult",
     "RetrievalScoreComponent",
-    "RetrievalSessionResult",
     "RetrievalSignal",
     "SemanticMemoryPort",
     "SemanticMemoryRecord",

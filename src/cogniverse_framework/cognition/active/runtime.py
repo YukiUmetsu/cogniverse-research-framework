@@ -110,6 +110,38 @@ class InMemoryActiveCognitionRuntime:
         self._refresh_memory_layers(logical_step=activated.logical_step)
         return activated
 
+    def admit_retrieved_node(
+        self,
+        node: ActiveCognitiveNode,
+        *,
+        retrieval_boost_ppm: int | None = None,
+    ) -> ActiveCognitiveNode:
+        """Admit a retrieved memory node with explicit retrieval activation."""
+
+        boost = (
+            retrieval_boost_ppm
+            if retrieval_boost_ppm is not None
+            else self._policy.retrieval_boost_ppm
+        )
+        existing = self._state.graph.get_node(node.node_id)
+        previous_activation = existing.activation_ppm if existing is not None else 0
+        base = apply_boost(previous_activation, boost_ppm=self._policy.perception_boost_ppm)
+        activated = node.with_activation(
+            apply_boost(base, boost_ppm=boost),
+            logical_step=node.logical_step,
+        )
+        self._state.graph = self._state.graph.with_node(activated)
+        self._append_activation_record(
+            node_id=activated.node_id,
+            logical_step=activated.logical_step,
+            previous_activation_ppm=previous_activation,
+            new_activation_ppm=activated.activation_ppm,
+            source=ActivationSource.RETRIEVAL,
+            reason=ActivationReason.MEMORY_RETRIEVED,
+        )
+        self._refresh_memory_layers(logical_step=activated.logical_step)
+        return activated
+
     def add_edge(self, edge: ActiveCognitiveEdge) -> ActiveCognitiveEdge:
         """Add a typed relation between existing graph nodes."""
 

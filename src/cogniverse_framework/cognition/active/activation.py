@@ -34,6 +34,7 @@ class ActivationReason(str, Enum):
     PRIMED_THRESHOLD_MET = "primed_threshold_met"
     BELOW_PRIMED_THRESHOLD = "below_primed_threshold"
     BELOW_WORKING_THRESHOLD = "below_working_threshold"
+    MEMORY_RETRIEVED = "memory_retrieved"
 
 
 @dataclass(frozen=True, slots=True)
