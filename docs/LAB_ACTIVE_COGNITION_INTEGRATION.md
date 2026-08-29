@@ -118,6 +118,8 @@ Use framework ablation helpers after baseline equivalence is proven. See [ACTIVE
 | Item | Owner | Status |
 | --- | --- | --- |
 | Framework reference fixture | Framework | Complete |
-| Lab consumer wiring | Learning Lab | Pending |
-| CA-I1 equivalence study | Learning Lab | Pending |
-| Evidence digests in lab runs | Learning Lab | Pending |
+| Lab consumer wiring (CA-I1/CA-P1) | Learning Lab | **Complete** |
+| CA-I1 equivalence study | Learning Lab | **Complete** — `cogniverse-learning-lab/evidence/cognitive_architecture/ca_i1_active_cognition_equivalence.json` |
+| CA-P1 MiniGrid equivalence | Learning Lab | **Complete** — `ca_p1_minigrid_public_percept_equivalence.json` |
+| Evidence digests in lab runs | Learning Lab | **Complete** (snapshot, state, event trace digests) |
+| Next: value/homeostasis lab validation | Learning Lab | Pending — use F2 APIs in [VALUE_HOMEOSTASIS_V1.md](VALUE_HOMEOSTASIS_V1.md) |

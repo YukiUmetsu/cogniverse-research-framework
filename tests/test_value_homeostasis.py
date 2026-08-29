@@ -6,13 +6,19 @@ from cogniverse_framework.cognition import (
     HomeostaticUpdate,
     LegacyScalarRewardAdapter,
     NeedState,
+    TransparentPriorityPolicy,
     ValueEstimate,
     ValueVector,
+    evaluate_hard_constraints,
+    rank_need_states,
 )
 from cogniverse_framework.replay import (
+    ValueHomeostasisTrace,
     build_event_trace,
+    build_value_homeostasis_trace,
     compare_event_traces,
     event_trace_to_evidence_payload,
+    value_homeostasis_trace_to_evidence_payload,
 )
 from cogniverse_framework.cognition.backends.events import CognitiveEvent, CognitiveEventKind
 
@@ -106,6 +112,168 @@ class ValueHomeostasisContractTests(unittest.TestCase):
         self.assertEqual(constraint.scopes, (ConstraintScope.SELF, ConstraintScope.USER))
         self.assertEqual(estimate.value_vector.vector_id, "value-1")
         self.assertEqual(update.new_deficit_ppm, 450_000)
+
+    def test_evaluate_hard_constraints_allow_and_block(self) -> None:
+        constraint = HardConstraint(
+            constraint_id="constraint-1",
+            source_system="fixture",
+            logical_step=2,
+            scopes=(ConstraintScope.SELF,),
+            blocked_subject_ids=("action-blocked",),
+            evidence_ids=("evidence-1",),
+        )
+        allowed = evaluate_hard_constraints(
+            (constraint,),
+            subject_id="action-safe",
+            logical_step=2,
+            source_system="fixture",
+        )
+        blocked = evaluate_hard_constraints(
+            (constraint,),
+            subject_id="action-blocked",
+            logical_step=2,
+            source_system="fixture",
+        )
+        self.assertTrue(allowed.allowed)
+        self.assertFalse(blocked.allowed)
+        self.assertEqual(blocked.violations[0].constraint_id, "constraint-1")
+
+    def test_rank_need_states_by_deficit_and_weight(self) -> None:
+        policy = TransparentPriorityPolicy(
+            policy_id="fixture-priority",
+            source_system="fixture",
+            need_kind_weights_ppm=(("energy", 800_000), ("safety", 400_000)),
+        )
+        needs = (
+            NeedState(
+                need_id="need-energy",
+                source_system="fixture",
+                logical_step=1,
+                need_kind="energy",
+                level_ppm=200_000,
+                target_ppm=700_000,
+                deficit_ppm=500_000,
+            ),
+            NeedState(
+                need_id="need-safety",
+                source_system="fixture",
+                logical_step=1,
+                need_kind="safety",
+                level_ppm=100_000,
+                target_ppm=900_000,
+                deficit_ppm=800_000,
+            ),
+        )
+        ranked = rank_need_states(needs, policy)
+        self.assertEqual(ranked[0].need.need_id, "need-energy")
+        self.assertGreater(ranked[0].priority_score_ppm, ranked[1].priority_score_ppm)
+
+    def test_value_homeostasis_trace_serializes_for_evidence(self) -> None:
+        need = NeedState(
+            need_id="need-energy",
+            source_system="fixture",
+            logical_step=1,
+            need_kind="energy",
+            level_ppm=190_000,
+            target_ppm=700_000,
+            deficit_ppm=510_000,
+        )
+        trace = build_value_homeostasis_trace(
+            source_system="fixture",
+            logical_step=1,
+            need_states=(need,),
+        )
+        payload = value_homeostasis_trace_to_evidence_payload(trace)
+        self.assertEqual(payload["artifact_kind"], "value_homeostasis_trace")
+        self.assertEqual(payload["trace_digest"], trace.digest())
+
+    def test_constraint_evaluations_sort_is_fully_deterministic(self) -> None:
+        blocked_a = evaluate_hard_constraints(
+            (
+                HardConstraint(
+                    constraint_id="constraint-a",
+                    source_system="fixture",
+                    logical_step=1,
+                    blocked_subject_ids=("action-1",),
+                ),
+            ),
+            subject_id="action-1",
+            logical_step=2,
+            source_system="fixture-alpha",
+        )
+        blocked_b = evaluate_hard_constraints(
+            (
+                HardConstraint(
+                    constraint_id="constraint-b",
+                    source_system="fixture",
+                    logical_step=1,
+                    blocked_subject_ids=("action-1",),
+                ),
+            ),
+            subject_id="action-1",
+            logical_step=2,
+            source_system="fixture-beta",
+        )
+        first = build_value_homeostasis_trace(
+            source_system="fixture",
+            logical_step=2,
+            constraint_evaluations=(blocked_b, blocked_a),
+        )
+        second = build_value_homeostasis_trace(
+            source_system="fixture",
+            logical_step=2,
+            constraint_evaluations=(blocked_a, blocked_b),
+        )
+        self.assertEqual(first.constraint_evaluations, second.constraint_evaluations)
+        self.assertEqual(first.digest(), second.digest())
+
+    def test_value_homeostasis_trace_round_trip_preserves_all_fields(self) -> None:
+        need = NeedState(
+            need_id="need-energy",
+            source_system="fixture",
+            logical_step=3,
+            need_kind="energy",
+            level_ppm=190_000,
+            target_ppm=700_000,
+            deficit_ppm=510_000,
+        )
+        vector = ValueVector(
+            vector_id="value-1",
+            source_system="fixture",
+            logical_step=3,
+            dimension_values_ppm=(("efficiency", 250_000),),
+        )
+        estimate = ValueEstimate(
+            estimate_id="estimate-1",
+            source_system="fixture",
+            logical_step=3,
+            value_vector=vector,
+            uncertainty_ppm=120_000,
+            horizon_steps=4,
+        )
+        constraint = HardConstraint(
+            constraint_id="constraint-1",
+            source_system="fixture",
+            logical_step=3,
+            blocked_subject_ids=("action-blocked",),
+        )
+        evaluation = evaluate_hard_constraints(
+            (constraint,),
+            subject_id="action-blocked",
+            logical_step=3,
+            source_system="fixture",
+        )
+        original = build_value_homeostasis_trace(
+            source_system="fixture",
+            logical_step=3,
+            need_states=(need,),
+            value_vectors=(vector,),
+            value_estimates=(estimate,),
+            constraint_evaluations=(evaluation,),
+        )
+        restored = ValueHomeostasisTrace.from_dict(original.to_dict())
+        self.assertEqual(restored.to_dict(), original.to_dict())
+        self.assertEqual(restored.digest(), original.digest())
 
 
 class CognitiveEventReplayTests(unittest.TestCase):

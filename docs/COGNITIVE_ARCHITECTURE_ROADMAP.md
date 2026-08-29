@@ -129,7 +129,7 @@ Exit gate:
 
 ## Phase F1.5 — active cognition foundation
 
-Status: **reference implementation complete; framework fixture complete; lab consumer pending**.
+Status: **reference implementation complete; lab CA-I1/CA-P1 closed**.
 
 Deliverables (implemented):
 
@@ -147,18 +147,18 @@ Not in this phase: world model, distributed runtime sync, scientific validation.
 
 Exit gate:
 
-- framework unit/contract tests (92/92 PASS);
+- framework unit/contract tests (96/96 PASS);
 - deterministic operation-log replay;
 - `CognitiveState` v1 digest unchanged;
 - framework reference coordinator fixture (complete);
-- one lab consumer fixture (pending — Learning Lab);
+- lab CA-I1/CA-P1 consumer equivalence (complete — see [LAB_ACTIVE_COGNITION_INTEGRATION.md](LAB_ACTIVE_COGNITION_INTEGRATION.md));
 - no LLM dependency.
 
 See [ACTIVE_COGNITION_V1.md](ACTIVE_COGNITION_V1.md) and [ACTIVE_COGNITION_ARCHITECTURE_AUDIT.md](ACTIVE_COGNITION_ARCHITECTURE_AUDIT.md).
 
 ## Phase F2 — value, safety and homeostasis contracts
 
-Status: **reference contracts implemented; lab validation pending**.
+Status: **reference machinery complete; lab validation pending**.
 
 Add only generic records and policies:
 
@@ -167,7 +167,10 @@ Add only generic records and policies:
 - `HardConstraint` and violation record;
 - `NeedState` with level, target, deficit and provenance;
 - `HomeostaticUpdate`;
-- `LegacyScalarRewardAdapter`.
+- `LegacyScalarRewardAdapter`;
+- `ConstraintEvaluation`, `evaluate_hard_constraints()`;
+- `TransparentPriorityPolicy`, `rank_need_states()`;
+- `ValueHomeostasisTrace` evidence helpers.
 
 Keep environment need dynamics and scientific weighting configurations injectable from the lab.
 
@@ -175,11 +178,11 @@ See [VALUE_HOMEOSTASIS_V1.md](VALUE_HOMEOSTASIS_V1.md).
 
 Exit gate:
 
-- deterministic traces;
-- configuration/version provenance;
+- framework unit/contract tests (96/96 PASS);
+- F2 contract verifier (`verify_value_homeostasis_contract.py`);
 - scalar reward cannot silently populate survival/safety;
-- controlled lab mechanism plus ablation;
-- second domain uses unchanged contracts.
+- controlled lab mechanism plus ablation (pending);
+- second domain uses unchanged contracts (pending).
 
 ## Phase F3 — world-model and prediction-error lifecycle
 
@@ -198,7 +201,7 @@ Do not implement one benchmark's transition model in the framework. Model algori
 
 ## Phase F4 — retrieval foundation
 
-Status: **reference implementation complete; lab consumer pending**.
+Status: **reference implementation complete; lab CA-I1/CA-P1 closed**.
 
 Deliverables (implemented):
 
@@ -213,11 +216,11 @@ Not in this phase: vector backends, learned ranking, scientific validation.
 
 Exit gate:
 
-- framework unit/contract tests (92/92 PASS);
+- framework unit/contract tests (96/96 PASS);
 - deterministic gap → request → ranked result replay;
 - `CognitiveState` v1 digest unchanged;
 - framework reference coordinator fixture (complete);
-- one lab consumer fixture (pending — Learning Lab).
+- lab CA-I1/CA-P1 consumer equivalence (complete).
 
 See [RETRIEVAL_FOUNDATION_V1.md](RETRIEVAL_FOUNDATION_V1.md).
 

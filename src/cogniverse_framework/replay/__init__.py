@@ -45,6 +45,11 @@ from .cognitive_events import (
     event_trace_to_evidence_payload,
     replay_event_trace,
 )
+from .value_homeostasis_traces import (
+    ValueHomeostasisTrace,
+    build_value_homeostasis_trace,
+    value_homeostasis_trace_to_evidence_payload,
+)
 from .types import (
     DivergencePoint,
     DivergenceResult,
@@ -98,4 +103,7 @@ __all__ = [
     "compare_event_traces",
     "event_trace_to_evidence_payload",
     "replay_event_trace",
+    "ValueHomeostasisTrace",
+    "build_value_homeostasis_trace",
+    "value_homeostasis_trace_to_evidence_payload",
 ]

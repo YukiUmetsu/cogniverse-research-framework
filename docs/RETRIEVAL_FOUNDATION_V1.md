@@ -37,7 +37,7 @@ Memory retrieval should be driven by **cognitive gaps and goals**, not surface s
 | --- | ---: |
 | Retrieval foundation tests | 5/5 PASS |
 | Cognition backends + coordinator tests | 6/6 PASS |
-| Full framework tests | 92/92 PASS |
+| Full framework tests | 96/96 PASS |
 | Retrieval verifier result digest | `188c6044…941a` |
 | `CognitiveState` v1 digest | unchanged |
 

@@ -16,7 +16,7 @@ The live runtime centers on a small **Active Cognitive Graph** with **Working Me
 | `ActiveCognitionCoordinator` | Perceive → gap → retrieve → feedback loop | Implemented (v1) |
 | `CognitiveEventBusPort` | Typed runtime event publication/replay | Implemented (v1) |
 | Pluggable backends | In-memory + optional Redis | Implemented (v1) |
-| F2 value / homeostasis contracts | NeedState, ValueVector, HardConstraint | Implemented (v1) |
+| F2 value / homeostasis contracts | NeedState, constraints, priority policy, traces | Implemented (v1) |
 
 Redis and other stores are optional backends only; framework tests run without them.
 
@@ -65,6 +65,7 @@ Prefer the coherent API under `cogniverse_framework.replay`:
 - `audit_sequence_divergence`, `find_later`, `first_divergence` — sequence audits
 - `shared_ancestry`, `first_reach_parents`, `ancestry_path` — ancestry graphs
 - `build_event_trace`, `event_trace_to_evidence_payload`, `compare_event_traces` — cognitive runtime event replay
+- `build_value_homeostasis_trace`, `value_homeostasis_trace_to_evidence_payload` — F2 mechanism traces
 - `diagnose_seed_failures` / `SeedProfile` — contrast repeatedly failing seeds
   against a reference cohort on caller-supplied metrics and milestones
 

@@ -344,9 +344,10 @@ ActiveCognitionSnapshot
 | This audit | **Complete** |
 | F1.5 active cognition code | **Implemented** — see [ACTIVE_COGNITION_V1.md](ACTIVE_COGNITION_V1.md) |
 | Coordinator + pluggable backends | **Implemented** — see [COGNITION_BACKENDS_V1.md](COGNITION_BACKENDS_V1.md) |
-| Framework tests | **92/92 PASS** |
+| Framework tests | **96/96 PASS** |
 | Framework reference coordinator fixture | **Complete** — `tests/test_coordinator_fixture.py` |
-| Lab consumer for active runtime | **Pending** (Learning Lab) |
+| Lab consumer for active runtime | **Complete** (CA-I1/CA-P1) |
+| F2 value/homeostasis machinery | **Complete** — see [VALUE_HOMEOSTASIS_V1.md](VALUE_HOMEOSTASIS_V1.md) |
 | Scientific validation | **Not claimed** |
 
 Passing tests demonstrate deterministic, auditable contracts — not that the activation policy is cognitively correct.

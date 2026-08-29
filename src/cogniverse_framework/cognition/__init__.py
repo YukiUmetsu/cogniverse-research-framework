@@ -43,9 +43,17 @@ from .backends import (
     create_event_bus,
     create_memory_store_set,
 )
+from .constraints import ConstraintEvaluation, evaluate_hard_constraints
 from .homeostasis import HomeostaticUpdate, NeedState
 from .legacy import LegacyScalarRewardAdapter
 from .perception import PerceptModality, PublicPercept
+from .priority import (
+    RankedNeed,
+    TransparentPriorityPolicy,
+    evaluate_subject_with_constraints,
+    rank_need_states,
+    rank_value_vectors,
+)
 from .retrieval.controller import (
     InMemoryRetrievalController,
     RetrievalController,
@@ -115,6 +123,7 @@ __all__ = [
     "MemoryKind",
     "MemoryStoreSetPort",
     "ConstraintScope",
+    "ConstraintEvaluation",
     "ConstraintViolation",
     "HardConstraint",
     "HomeostaticUpdate",
@@ -126,6 +135,7 @@ __all__ = [
     "PrimedMemoryItem",
     "ProceduralMemoryRecord",
     "PublicPercept",
+    "RankedNeed",
     "ReferenceKind",
     "RetrievalCandidate",
     "RetrievalController",
@@ -135,6 +145,7 @@ __all__ = [
     "RetrievalSessionResult",
     "RetrievalSignal",
     "SemanticMemoryRecord",
+    "TransparentPriorityPolicy",
     "ValueEstimate",
     "ValueVector",
     "WorkingMemory",
@@ -147,8 +158,12 @@ __all__ = [
     "default_percept_node_id",
     "detect_cognitive_gaps",
     "episodic_memory_record",
+    "evaluate_hard_constraints",
+    "evaluate_subject_with_constraints",
     "memory_node_id",
     "procedural_memory_record",
+    "rank_need_states",
+    "rank_value_vectors",
     "run_ablated_cycle",
     "semantic_memory_record",
 ]

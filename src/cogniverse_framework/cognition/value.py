@@ -33,6 +33,7 @@ class HardConstraint:
     source_system: str
     logical_step: int
     scopes: tuple[ConstraintScope, ...] = field(default_factory=tuple)
+    blocked_subject_ids: tuple[str, ...] = field(default_factory=tuple)
     description_sha256: str | None = None
     evidence_ids: tuple[str, ...] = field(default_factory=tuple)
 
@@ -54,6 +55,11 @@ class HardConstraint:
         object.__setattr__(self, "scopes", normalized_scopes)
         object.__setattr__(
             self,
+            "blocked_subject_ids",
+            normalize_identifiers("blocked_subject_ids", tuple(self.blocked_subject_ids)),
+        )
+        object.__setattr__(
+            self,
             "evidence_ids",
             normalize_identifiers("evidence_ids", tuple(self.evidence_ids)),
         )
@@ -65,6 +71,7 @@ class HardConstraint:
             "source_system": self.source_system,
             "logical_step": self.logical_step,
             "scopes": [scope.value for scope in self.scopes],
+            "blocked_subject_ids": list(self.blocked_subject_ids),
             "description_sha256": self.description_sha256,
             "evidence_ids": list(self.evidence_ids),
         }

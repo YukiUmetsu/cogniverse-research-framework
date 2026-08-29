@@ -37,7 +37,7 @@ Cogniverse cognition is moving from a linear pipeline mental model toward **dyna
 | `CognitiveEventBus` | **Implemented** (in-memory + optional Redis) |
 | Framework reference coordinator fixture | **Implemented** |
 | World model / prediction deltas | **Proposed** |
-| Lab consumer equivalence (CA-I1 style) | **Pending** (Learning Lab) |
+| Lab consumer equivalence (CA-I1 style) | **Complete** (Learning Lab — CA-I1/CA-P1) |
 | Scientific validation of activation policy | **Not yet tested scientifically** |
 
 ## 3. Contract test results
@@ -47,7 +47,7 @@ Cogniverse cognition is moving from a linear pipeline mental model toward **dyna
 | Active cognition focused tests | 11/11 PASS | Graph, runtime, replay, projection |
 | Active perception bridge tests | 7/7 PASS | PublicPercept → runtime → CognitiveState |
 | Cognition backends + coordinator tests | 6/6 PASS | Backends, coordinator, event replay |
-| Full framework tests | 93/93 PASS | No regression in existing packages |
+| Full framework tests | 96/96 PASS | No regression in existing packages |
 | `CognitiveState` v1 digest | unchanged | `32c435fe…07f7` |
 | Active cognition verifier digest | `e8ac96a6…c216` | Deterministic replay fixture |
 | Perception pipeline verifier digest | `84acaf19…e8bf` | PublicPercept bridge fixture |
@@ -143,7 +143,7 @@ For batch replay in tests, use `ActivePerceptionConsumer.process_percepts(...)`.
 - Working-memory eviction ranks by current activation with deterministic tie-breaking.
 - `to_cognitive_state()` maps working-memory items to episodic memory refs as a projection convenience; this does not claim episodic storage semantics are complete.
 - Passing contract tests does **not** demonstrate biological or task-level cognitive benefit.
-- Learning Lab consumer equivalence (CA-I1 style) for active cognition is still **pending** — see [LAB_ACTIVE_COGNITION_INTEGRATION.md](LAB_ACTIVE_COGNITION_INTEGRATION.md).
+- Lab CA-I1/CA-P1 consumer equivalence (CA-I1 style) for active cognition is **complete** — see [LAB_ACTIVE_COGNITION_INTEGRATION.md](LAB_ACTIVE_COGNITION_INTEGRATION.md).
 
 ## 7. Learning Lab integration checklist
 
@@ -160,9 +160,9 @@ PYTHONPATH=src python scripts/verify_active_cognition_coordinator.py
 
 ## 8. What is next
 
-1. Complete Learning Lab consumer wiring (pin commit, CA-I1 equivalence, evidence digests).
-2. F2 value/homeostasis contracts (in progress — see [VALUE_HOMEOSTASIS_V1.md](VALUE_HOMEOSTASIS_V1.md)).
-3. Optional PostgreSQL/graph/vector memory backends behind the same ports.
+1. Learning Lab: advance framework pin, re-run equivalence gates, and run value/homeostasis mechanism studies using F2 APIs — see [VALUE_HOMEOSTASIS_V1.md](VALUE_HOMEOSTASIS_V1.md).
+2. Optional PostgreSQL/graph/vector memory backends behind the same ports.
+3. Phase F3 world-model contracts after F2 lab validation.
 4. Run controlled ablations — only then label mechanisms **experimentally validated**.
 
 See [Cognition backends v1](COGNITION_BACKENDS_V1.md), [Retrieval foundation v1](RETRIEVAL_FOUNDATION_V1.md), and [Active cognition ablations](ACTIVE_COGNITION_ABLATIONS.md).
